@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<script>try{var __th=localStorage.getItem("eden_erp_theme");document.documentElement.setAttribute("data-theme",__th==="light"?"light":"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+<link rel="icon" href="data:," />
+<title>Eden Royal Marquee — ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0b09; --bg2:#14120e; --card:#1a1813; --card2:#211e17;
+  --line:#2e2a20; --gold:#c9a227; --gold2:#e8c95a; --gold-dim:#8a7422;
+  --ink:#f5f1e6; --muted:#b8b09c; --faint:#8d8672;
+  --green:#4caf7d; --red:#e0655f; --amber:#e0a83e; --blue:#5b8dd9;
+  --radius:14px; --nav-h:64px;
+}
+html[data-theme="light"]{
+  --bg:#f7f4ec; --bg2:#efe9da; --card:#ffffff; --card2:#faf7ee; --line:#ddd3ba;
+  --gold2:#96700a; --gold-dim:#b08d1e;
+  --ink:#1c1a14; --muted:#5d5747; --faint:#8a8271;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.45;padding-bottom:calc(var(--nav-h) + 18px)}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;margin:0}
+button,[role="button"],select,input,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+button,select,input:not([type="checkbox"]),textarea{min-height:44px}
+input,select,textarea{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}
+label{font-size:12.5px;font-weight:600;color:var(--muted);display:block;margin:0 0 5px}
+.btn{border:1px solid var(--line);background:var(--card2);border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;justify-content:center;min-height:44px}
+.btn:active{transform:scale(.98)}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#191405;border-color:var(--gold-dim)}
+.btn-danger{background:transparent;color:var(--red);border-color:var(--red)}
+.btn-sm{min-height:38px;padding:6px 12px;font-size:13.5px}
+.btn-block{width:100%}
+header.top{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px 10px}
+.hall-name{font-size:22px;font-weight:800;color:var(--gold2);letter-spacing:.3px;line-height:1.15}
+.hall-sub{font-size:12px;color:var(--muted)}
+.top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.top-actions{display:flex;gap:8px;flex-shrink:0}
+.chip-btn{border:1px solid var(--gold-dim);color:var(--gold2);background:transparent;border-radius:999px;padding:6px 14px;font-weight:700;cursor:pointer;min-height:38px;font-size:13.5px}
+main{max-width:1080px;margin:0 auto;padding:16px}
+.view{display:none}
+.view.active{display:block}
+.sec-title{font-size:20px;margin:4px 0 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.grid{display:grid;gap:12px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-4{grid-template-columns:repeat(2,1fr)}
+@media(min-width:760px){.grid-4{grid-template-columns:repeat(4,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 15px}
+.stat .k{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.stat .v{font-size:22px;font-weight:800;margin-top:4px}
+.stat .v.gold{color:var(--gold2)} .stat .v.green{color:var(--green)} .stat .v.red{color:var(--red)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:17px;margin-bottom:10px}
+.list-item{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;margin-bottom:10px}
+.list-item .row1{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.list-item .t{font-weight:700;font-size:15.5px}
+.meta{font-size:13px;color:var(--muted);margin-top:2px}
+.badge{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.3px;white-space:nowrap}
+.b-Confirmed{background:#1d3a2a;color:#7fe0a8}.b-Pending{background:#3d3413;color:#f2cd6b}
+.b-Completed{background:#1d2f45;color:#8dbcf5}.b-Cancelled{background:#40201e;color:#f09a94}
+.b-paid{background:#1d3a2a;color:#7fe0a8}.b-part{background:#3d3413;color:#f2cd6b}.b-unpaid{background:#40201e;color:#f09a94}
+html[data-theme="light"] .b-Confirmed{background:#dff2e4;color:#1c6b3c}
+html[data-theme="light"] .b-Pending{background:#f7ecc4;color:#7a5c00}
+html[data-theme="light"] .b-Completed{background:#dde9f8;color:#24548f}
+html[data-theme="light"] .b-Cancelled{background:#f8dede;color:#93302b}
+html[data-theme="light"] .b-paid{background:#dff2e4;color:#1c6b3c}
+html[data-theme="light"] .b-part{background:#f7ecc4;color:#7a5c00}
+html[data-theme="light"] .b-unpaid{background:#f8dede;color:#93302b}
+.hall-num{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;border-radius:10px;background:var(--card2);border:1px solid var(--gold-dim);color:var(--gold2);font-weight:800;padding:0 9px;flex-shrink:0;font-size:14px}
+.hall-row{display:flex;align-items:center;gap:11px}
+.hall-row .grow{flex:1;min-width:0}
+.theme-btn{display:inline-flex;align-items:center;gap:6px}
+.theme-btn svg{width:15px;height:15px;flex-shrink:0}
+.theme-btn .th-dark,.theme-btn .th-light{display:inline-flex;align-items:center;gap:6px}
+html[data-theme="dark"] .theme-btn .th-light{display:none}
+html[data-theme="light"] .theme-btn .th-dark{display:none}
+html[data-theme="light"] .modal-bg{background:rgba(60,50,20,.45)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.empty{border:1.5px dashed var(--line);border-radius:var(--radius);padding:26px 16px;text-align:center;color:var(--muted)}
+.empty b{color:var(--ink);display:block;font-size:16px;margin-bottom:4px}
+nav.bottom{position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--bg2);border-top:1px solid var(--line);display:flex;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom)}
+nav.bottom button{flex:1;background:none;border:none;color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:44px;padding:6px 2px}
+nav.bottom button svg{width:22px;height:22px}
+nav.bottom button.on{color:var(--gold2)}
+nav.bottom button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:80;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg2);width:100%;max-width:640px;max-height:92vh;overflow-y:auto;border-radius:18px 18px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));border-top:2px solid var(--gold)}
+@media(min-width:700px){.modal-bg{align-items:center}.modal{border-radius:18px;border:1px solid var(--line)}}
+.modal h3{font-size:19px;margin-bottom:14px;padding-right:36px}
+.modal .x{position:absolute}
+.m-head{position:relative}
+.m-close{position:absolute;top:-4px;inset-inline-end:0;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:18px;cursor:pointer;color:var(--ink)}
+.f-grid{display:grid;gap:12px}
+@media(min-width:560px){.f-grid.c2{grid-template-columns:1fr 1fr}}
+.calc-box{background:var(--card);border:1px solid var(--gold-dim);border-radius:var(--radius);padding:14px 16px}
+.calc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:14.5px}
+.calc-row.total{border-top:1px solid var(--line);margin-top:6px;padding-top:10px;font-weight:800;font-size:17px;color:var(--gold2)}
+.calc-row.due{font-weight:800;color:var(--red)}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+.switch{position:relative;width:56px;height:32px;flex-shrink:0}
+.switch input{opacity:0;width:100%;height:100%;position:absolute;margin:0;cursor:pointer;min-height:32px}
+.switch .tr{position:absolute;inset:0;background:var(--line);border-radius:999px;pointer-events:none;transition:.2s}
+.switch .tr::after{content:"";position:absolute;top:4px;inset-inline-start:4px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked + .tr{background:var(--gold)}
+.switch input:checked + .tr::after{transform:translateX(24px)}
+[dir="rtl"] .switch input:checked + .tr::after{transform:translateX(-24px)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+td.num,th.num{text-align:end;font-variant-numeric:tabular-nums}
+.table-wrap{overflow-x:auto}
+.toast{position:fixed;bottom:calc(var(--nav-h) + 16px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--gold);color:#191405;font-weight:700;padding:12px 20px;border-radius:999px;z-index:120;opacity:0;pointer-events:none;transition:.25s;max-width:92vw;text-align:center;font-size:14px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red);color:#fff}
+#lockScreen{position:fixed;inset:0;background:var(--bg);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+#lockScreen.open{display:flex}
+.lock-card{max-width:340px;width:100%;text-align:center}
+.lock-card h2{color:var(--gold2);font-size:26px;margin-bottom:6px}
+.pin-dots{font-size:30px;letter-spacing:12px;margin:16px 0;min-height:40px;color:var(--gold2)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pin-pad button{height:58px;font-size:20px;font-weight:700;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink)}
+.search-row{display:flex;gap:8px;margin-bottom:12px}
+.search-row input{flex:1}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.seg button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;color:var(--muted);min-height:40px}
+.seg button.on{background:var(--gold);color:#191405;border-color:var(--gold)}
+footer.foot{text-align:center;color:var(--faint);font-size:12.5px;padding:8px 16px 4px}
+#printArea{display:none}
+@media print{
+  body>*{display:none !important}
+  body{padding:0;background:#fff}
+  #printArea{display:block !important;color:#111;font-family:"Public Sans",Arial,sans-serif}
+}
+.inv{color:#111;background:#fff;padding:28px;max-width:760px;margin:0 auto}
+.inv.thermal{max-width:300px;padding:10px;font-size:12px}
+.inv h1{font-family:"Playfair Display",serif;text-align:center;font-size:26px;color:#111}
+.inv.thermal h1{font-size:18px}
+.inv .c{text-align:center}
+.inv hr{border:none;border-top:2px solid #c9a227;margin:10px 0}
+.inv table th,.inv table td{border-bottom:1px solid #ddd;color:#111}
+.inv .tot{font-size:17px;font-weight:800}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cal-head h3{font-size:18px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-dow{text-align:center;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;padding:4px 0}
+.cal-cell{border:1px solid var(--line);border-radius:10px;padding:7px 6px;min-height:74px;cursor:pointer;background:var(--card2);text-align:start;width:100%;color:var(--ink)}
+.cal-cell .dnum{font-weight:800;font-size:14px}
+.cal-cell .cnt{font-size:11px;font-weight:700;margin-top:2px;line-height:1.35}
+.cal-cell.avail{border-color:var(--green)}
+.cal-cell.partial{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 10%, var(--card2))}
+.cal-cell.full{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%, var(--card2))}
+.cal-cell.past{opacity:.45}
+.cal-cell.today{outline:2px solid var(--gold);outline-offset:1px}
+.cal-cell.sel{box-shadow:0 0 0 2px var(--gold2) inset}
+.cal-cell.blank{visibility:hidden;pointer-events:none}
+.slot-warn{border:1px solid var(--red);color:var(--red);background:color-mix(in srgb,var(--red) 8%, transparent);border-radius:10px;padding:10px 12px;font-weight:700;font-size:13.5px;display:none;margin-top:10px}
+.slot-ok{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--muted);margin-top:10px}
+input[readonly].fixed-tax{background:var(--card);font-weight:800;color:var(--gold2)}
+@media(max-width:560px){.cal-cell{min-height:64px;padding:5px 4px}.cal-cell .cnt{font-size:10px}}
+</style>
+</head>
+<body>
+
+<div id="lockScreen">
+  <div class="lock-card">
+    <h2 id="lockHall">Eden Royal Marquee</h2>
+    <p style="color:var(--muted)" data-i18n="enterPin">Enter PIN to unlock</p>
+    <div class="pin-dots" id="pinDots"></div>
+    <div class="pin-pad" id="pinPad"></div>
+    <p id="pinErr" style="color:var(--red);min-height:20px"></p>
+  </div>
+</div>
+
+<header class="top">
+  <div class="top-row">
+    <div>
+      <div class="hall-name" id="hdrHall">Eden Royal Marquee</div>
+      <div class="hall-sub" id="hdrSub">Marriage Hall ERP · <span id="hdrDate"></span></div>
+    </div>
+    <div class="top-actions">
+      <button class="chip-btn theme-btn" id="themeBtn" type="button" aria-label="Theme">
+        <span class="th-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span data-i18n="dark">Dark</span></span>
+        <span class="th-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="light">Light</span></span>
+      </button>
+      <button class="chip-btn" id="langBtn" type="button">اردو</button>
+      <button class="chip-btn" id="lockBtn" type="button" style="display:none">🔒 <span data-i18n="lock">Lock</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- DASHBOARD -->
+  <section class="view active" id="view-dashboard">
+    <div class="grid grid-4" id="dashStats"></div>
+    <a class="btn btn-gold btn-block" href="https://muse.ai/files/1463991716795376/1691706329212243/l3kl49v84ma6a4hi23ypjwtx/eden-royal-marquee.apk" download style="margin-top:14px;text-decoration:none;font-size:16px;padding:14px 16px">⬇ Download APK (Version 1.1)</a>
+    <div class="card" style="margin-top:14px">
+      <h3 data-i18n="revVsExp">Last 7 days — Revenue vs Expenses (PKR)</h3>
+      <div id="chart7"></div>
+    </div>
+    <div class="grid grid-2">
+      <div class="card">
+        <h3 data-i18n="todayEvents">Today's Events</h3>
+        <div id="dashToday"></div>
+      </div>
+      <div class="card">
+        <h3 data-i18n="upcoming">Upcoming Events</h3>
+        <div id="dashUpcoming"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="availDates">Available Booking Dates — next 14 days</h3>
+      <div id="dashAvail" class="meta" style="line-height:2"></div>
+    </div>
+  </section>
+
+  <!-- BOOKINGS -->
+  <section class="view" id="view-bookings">
+    <div class="sec-title"><h2 data-i18n="bookings">Bookings</h2>
+      <button class="btn btn-gold" id="newBookingBtn" type="button">+ <span data-i18n="newBooking">New Booking</span></button></div>
+    <div class="search-row"><input id="bookingSearch" type="search" placeholder="Search name / phone…"></div>
+    <div class="seg" id="bookingFilter">
+      <button data-f="All" class="on" type="button">All</button>
+      <button data-f="Confirmed" type="button">Confirmed</button>
+      <button data-f="Pending" type="button">Pending</button>
+      <button data-f="Completed" type="button">Completed</button>
+      <button data-f="Cancelled" type="button">Cancelled</button>
+    </div>
+    <div class="seg" id="bkViewSeg" role="tablist" aria-label="Bookings view">
+      <button data-bkv="list" class="on" type="button">List</button>
+      <button data-bkv="calendar" type="button">📅 <span data-i18n="bookingCalendar">Booking Calendar</span></button>
+    </div>
+    <div id="bookingListWrap"><div id="bookingList"></div></div>
+    <div id="bookingCalWrap" style="display:none">
+      <div class="card">
+        <div class="cal-head">
+          <button class="btn btn-sm" id="calPrev" type="button" aria-label="Previous month">‹ <span data-i18n="prevMonth">Prev</span></button>
+          <h3 id="calTitle">Month</h3>
+          <button class="btn btn-sm" id="calNext" type="button" aria-label="Next month"><span data-i18n="nextMonth">Next</span> ›</button>
+        </div>
+        <div class="cal-grid" id="calDow"></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <p class="meta" style="margin-top:10px"><span style="color:var(--green)">■</span> Available &nbsp;<span style="color:var(--amber)">■</span> Partially Booked &nbsp;<span style="color:var(--red)">■</span> Full (4/4) &nbsp;<span style="opacity:.5">■</span> Past &nbsp;·&nbsp; Gold outline = Today</p>
+      </div>
+      <div class="card" id="calDetail"><p class="meta">Tap any date to see its bookings, Day / Night breakdown and remaining slots.</p></div>
+    </div>
+  </section>
+
+  <!-- POS -->
+  <section class="view" id="view-pos">
+    <div class="sec-title"><h2 data-i18n="posBilling">POS Billing</h2>
+      <button class="btn" id="historyBtn" type="button"><span data-i18n="billingHistory">Billing History</span></button></div>
+    <div class="card">
+      <div class="f-grid c2">
+        <div><label data-i18n="fromBooking">From Booking (optional)</label>
+          <select id="posBooking"><option value="">— Walk-in bill —</option></select></div>
+        <div><label data-i18n="custName">Customer Name</label><input id="posName" type="text"></div>
+        <div><label data-i18n="phone">Phone</label><input id="posPhone" type="tel"></div>
+        <div><label data-i18n="eventDate">Event Date</label><input id="posDate" type="date"></div>
+        <div><label data-i18n="eventTiming">Event Timing</label><select id="posTiming"><option>Day</option><option>Night</option></select></div>
+        <div><label data-i18n="guests">Number of Guests</label><input id="posGuests" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+        <div><label data-i18n="perHead">Per Head Rate (PKR)</label><input id="posPerHead" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+        <div><label data-i18n="stageCharges">Stage Charges (PKR)</label><input id="posRent" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+        <div><label data-i18n="additional">Additional Charges (PKR)</label><input id="posAdd" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+        <div><label data-i18n="discount">Discount (PKR)</label><input id="posDisc" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+        <div><label data-i18n="paidAmt">Paid Amount (PKR)</label><input id="posPaid" type="number" min="0" inputmode="numeric" placeholder="0"></div>
+        <div><label data-i18n="payMethod">Payment Method</label>
+          <select id="posMethod"><option>Cash</option><option>Bank Transfer</option><option>Online</option></select></div>
+        <div><label data-i18n="invFormat">Invoice Format</label>
+          <select id="posFormat"><option value="A4">A4</option><option value="80mm">80mm Thermal</option></select></div>
+      </div>
+      <div class="switch-row">
+        <div><b data-i18n="kitchenCharges">Kitchen Charges</b> <span class="meta">(optional — off by default)</span></div>
+        <label class="switch"><input type="checkbox" id="posKitchenOn"><span class="tr"></span></label>
+      </div>
+      <div id="kitchenWrap" style="display:none">
+        <label data-i18n="kitchenAmt">Kitchen Charges Amount (PKR)</label>
+        <input id="posKitchenAmt" type="number" min="0" step="1" inputmode="numeric" placeholder="0">
+      </div>
+      <div style="margin-top:6px">
+        <label data-i18n="fbrTaxAmt">FBR Tax Amount (PKR) — Fixed</label>
+        <input id="posTaxAmt" class="fixed-tax" type="text" value="10,000" readonly tabindex="-1" aria-readonly="true">
+        <p class="meta" style="margin-top:5px">FBR Tax PKR 10,000 is included in every bill by default. It cannot be turned off or changed.</p>
+      </div>
+      <div class="calc-box" id="posCalc" style="margin-top:10px"></div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-gold" id="posSave" type="button" style="flex:1">🧾 <span data-i18n="saveInvoice">Save Invoice</span></button>
+        <button class="btn" id="posReset" type="button"><span data-i18n="clear">Clear</span></button>
+      </div>
+    </div>
+    <div id="historyWrap" style="display:none">
+      <h3 style="margin:6px 0 10px" data-i18n="billingHistory">Billing History</h3>
+      <div id="invoiceList"></div>
+    </div>
+  </section>
+
+  <!-- EXPENSES -->
+  <section class="view" id="view-expenses">
+    <div class="sec-title"><h2 data-i18n="expenses">Expenses</h2>
+      <button class="btn btn-gold" id="newExpenseBtn" type="button">+ <span data-i18n="addExpense">Add Expense</span></button></div>
+    <div class="grid grid-4" id="expStats"></div>
+    <div style="height:12px"></div>
+    <div id="expenseList"></div>
+  </section>
+
+  <!-- CUSTOMERS -->
+  <section class="view" id="view-customers">
+    <div class="sec-title"><h2 data-i18n="customers">Customers</h2></div>
+    <div class="search-row"><input id="custSearch" type="search" placeholder="Search name / phone…"></div>
+    <div id="customerList"></div>
+  </section>
+
+  <!-- REPORTS -->
+  <section class="view" id="view-reports">
+    <div class="sec-title"><h2 data-i18n="reports">Reports</h2></div>
+    <div class="card">
+      <div class="f-grid c2">
+        <div><label data-i18n="reportType">Report Type</label>
+          <select id="repType">
+            <option value="dailySales">Daily Sales Report</option>
+            <option value="monthlyRevenue">Monthly Revenue Report</option>
+            <option value="dailyExpense">Daily Expense Report</option>
+            <option value="monthlyExpense">Monthly Expense Report</option>
+            <option value="pl">Profit &amp; Loss Report</option>
+            <option value="pending">Pending Payment Report</option>
+            <option value="history">Booking History</option>
+          </select></div>
+        <div><label data-i18n="month">Month</label><input id="repMonth" type="month"></div>
+        <div><label data-i18n="date">Date (daily reports)</label><input id="repDate" type="date"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-gold" id="repRun" type="button"><span data-i18n="generate">Generate</span></button>
+        <button class="btn" id="repCsv" type="button">⬇ Excel (CSV)</button>
+        <button class="btn" id="repPrint" type="button">🖨 <span data-i18n="printPdf">Print / PDF</span></button>
+      </div>
+    </div>
+    <div class="card" id="repOut" style="display:none"><div id="repBody"></div></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="view" id="view-settings">
+    <div class="sec-title"><h2 data-i18n="settings">Settings</h2></div>
+    <div class="card">
+      <h3 data-i18n="hallDetails">Hall Details</h3>
+      <div class="f-grid c2">
+        <div><label data-i18n="hallName">Hall Name</label><input id="setName" type="text"></div>
+        <div><label data-i18n="phone">Contact Number</label><input id="setContact" type="tel"></div>
+        <div style="grid-column:1/-1"><label data-i18n="address">Address</label><input id="setAddress" type="text"></div>
+        <div><label data-i18n="currency">Currency</label><input id="setCurrency" type="text" value="PKR"></div>
+        <div><label data-i18n="defPerHead">Default Per Head Rate (PKR)</label><input id="setPerHead" type="number" min="0"></div>
+        <div><label data-i18n="fbrTaxAmt">FBR Tax Amount (PKR) — Fixed</label><input id="setTax" class="fixed-tax" type="text" value="10,000" readonly tabindex="-1" aria-readonly="true"></div>
+        <div><label data-i18n="defFormat">Default Invoice Format</label>
+          <select id="setFormat"><option value="A4">A4</option><option value="80mm">80mm Thermal</option></select></div>
+      </div>
+      <button class="btn btn-gold btn-block" id="setSave" type="button" style="margin-top:14px"><span data-i18n="saveSettings">Save Settings</span></button>
+    </div>
+    <div class="card">
+      <h3 data-i18n="manageHalls">Manage Halls</h3>
+      <p class="meta" data-i18n="hallsNote">Add each hall with its name and hall number (e.g. Hall 1, Hall 2, Royal Hall). Added halls appear in the booking form's hall dropdown, and double-booking is prevented separately for each hall.</p>
+      <div id="hallList" style="margin-top:12px"></div>
+      <div class="f-grid c2" style="margin-top:4px">
+        <div><label data-i18n="hallNumber">Hall Number</label><input id="newHallNumber" type="text" inputmode="text" placeholder="e.g. 1" autocomplete="off"></div>
+        <div><label data-i18n="eachHallName">Hall Name</label><input id="newHallName" type="text" placeholder="e.g. Royal Hall" autocomplete="off"></div>
+      </div>
+      <p id="hallErr" style="color:var(--red);font-weight:600;min-height:20px;margin:8px 0 0"></p>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn btn-gold" id="addHallBtn" type="button" style="flex:1">+ <span data-i18n="addHall">Add Hall</span></button>
+        <button class="btn" id="cancelHallEditBtn" type="button" style="display:none"><span data-i18n="cancelEdit">Cancel Edit</span></button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🔒 <span data-i18n="pinLock">PIN Lock</span></h3>
+      <p class="meta" data-i18n="pinNote">Set a 4-digit PIN to lock the app on open. Leave empty to remove.</p>
+      <div class="f-grid c2">
+        <div><label data-i18n="newPin">New PIN (4 digits)</label><input id="setPin" type="password" inputmode="numeric" maxlength="4" placeholder="••••"></div>
+      </div>
+      <button class="btn btn-block" id="pinSave" type="button" style="margin-top:12px"><span data-i18n="savePin">Save PIN</span></button>
+    </div>
+    <div class="card">
+      <h3 data-i18n="backup">Backup &amp; Restore</h3>
+      <p class="meta" data-i18n="backupNote">All data is saved on this phone. Download a backup file regularly and keep it safe.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn btn-gold" id="backupBtn" type="button">⬇ <span data-i18n="downloadBackup">Download Backup</span></button>
+        <label class="btn" style="cursor:pointer">⬆ <span data-i18n="restoreBackup">Restore Backup</span>
+          <input id="restoreFile" type="file" accept=".json,application/json" style="display:none"></label>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Android App</h3>
+      <p class="meta">Download the Eden Royal Marquee Android app (APK) for this phone.</p>
+      <a class="btn btn-gold btn-block" href="https://muse.ai/files/1463991716795376/1691706329212243/l3kl49v84ma6a4hi23ypjwtx/eden-royal-marquee.apk" download style="margin-top:10px;text-decoration:none">⬇ Download APK (Version 1.1)</a>
+    </div>
+    <div class="card">
+      <h3 data-i18n="appearance">Appearance</h3>
+      <p class="meta" data-i18n="themeNote">Choose Dark or Light theme. Your choice is saved on this phone and stays after reopening the app.</p>
+      <div class="seg" id="themeSeg" style="margin:12px 0 0">
+        <button type="button" data-theme-opt="dark"><span data-i18n="dark">Dark</span></button>
+        <button type="button" data-theme-opt="light"><span data-i18n="light">Light</span></button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 data-i18n="language">Language</h3>
+      <button class="btn btn-block" id="langBtn2" type="button">English / اردو — Switch</button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">Developed by Shawaiz Ali</footer>
+
+<nav class="bottom" id="bottomNav">
+  <button data-view="dashboard" class="on" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span data-i18n="dashboard">Dashboard</span></button>
+  <button data-view="bookings" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span data-i18n="bookings">Bookings</span></button>
+  <button data-view="pos" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M8 7h8M8 11h8M8 15h5"/></svg><span data-i18n="pos">POS Bill</span></button>
+  <button data-view="expenses" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 6.5C17 4.6 14.8 4 12 4s-5 1-5 3.2c0 4.4 10 2.4 10 7.3 0 2.2-2.2 2.9-5 2.9s-5-1-5-2.7"/></svg><span data-i18n="expenses">Expenses</span></button>
+  <button data-view="customers" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span data-i18n="customers">Customers</span></button>
+  <button data-view="reports" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg><span data-i18n="reports">Reports</span></button>
+  <button data-view="settings" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span data-i18n="settings">Settings</span></button>
+</nav>
+
+<!-- BOOKING MODAL -->
+<div class="modal-bg" id="bookingModal"><div class="modal">
+  <div class="m-head"><h3 id="bkModalTitle">New Booking</h3><button class="m-close" data-close="bookingModal" type="button">✕</button></div>
+  <form id="bookingForm"><div class="f-grid c2">
+    <div><label data-i18n="custName">Customer Name</label><input id="bkName" required type="text"></div>
+    <div><label data-i18n="phone">Contact Number</label><input id="bkPhone" required type="tel"></div>
+    <div><label data-i18n="eventType">Event Type</label><select id="bkType">
+      <option>Wedding</option><option>Mehndi</option><option>Barat</option><option>Walima</option><option>Birthday</option><option>Other</option></select></div>
+    <div><label data-i18n="hall">Hall</label><select id="bkHall"></select></div>
+    <div><label data-i18n="eventDate">Event Date</label><input id="bkDate" required type="date"></div>
+    <div><label data-i18n="eventTiming">Event Timing</label><select id="bkTiming" required><option value="Day">Day</option><option value="Night">Night</option></select></div>
+    <div><label data-i18n="guests">Number of Guests</label><input id="bkGuests" type="number" min="0" placeholder="0"></div>
+    <div><label data-i18n="perHead">Per Head Rate (PKR)</label><input id="bkPerHead" type="number" min="0" placeholder="0"></div>
+    <div><label data-i18n="stageCharges">Stage Charges (PKR)</label><input id="bkRent" type="number" min="0" placeholder="0"></div>
+    <div><label data-i18n="additional">Additional Charges (PKR)</label><input id="bkAdd" type="number" min="0" placeholder="0"></div>
+    <div><label data-i18n="discount">Discount (PKR)</label><input id="bkDisc" type="number" min="0" placeholder="0"></div>
+    <div><label data-i18n="advance">Advance Payment (PKR)</label><input id="bkAdvance" type="number" min="0" placeholder="0"></div>
+    <div><label data-i18n="status">Status</label><select id="bkStatus">
+      <option>Confirmed</option><option>Pending</option><option>Completed</option><option>Cancelled</option></select></div>
+    <div><label data-i18n="payMethod">Advance Method</label><select id="bkAdvMethod"><option>Cash</option><option>Bank Transfer</option><option>Online</option></select></div>
+    <div style="grid-column:1/-1"><label data-i18n="instructions">Special Instructions</label><textarea id="bkNotes" rows="2"></textarea></div>
+  </div>
+  <div class="calc-box" id="bkCalc" style="margin-top:12px"></div>
+  <div class="slot-ok" id="bkSlotInfo" role="status"></div>
+  <div class="slot-warn" id="bkSlotWarn" role="alert"></div>
+  <p id="bkErr" style="color:var(--red);font-weight:600;min-height:20px"></p>
+  <button class="btn btn-gold btn-block" type="submit"><span data-i18n="saveBooking">Save Booking</span></button>
+  </form>
+</div></div>
+
+<!-- BOOKING DETAIL MODAL -->
+<div class="modal-bg" id="detailModal"><div class="modal">
+  <div class="m-head"><h3 id="dtTitle">Booking</h3><button class="m-close" data-close="detailModal" type="button">✕</button></div>
+  <div id="dtBody"></div>
+</div></div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-bg" id="payModal"><div class="modal">
+  <div class="m-head"><h3 data-i18n="addPayment">Add Payment</h3><button class="m-close" data-close="payModal" type="button">✕</button></div>
+  <form id="payForm"><div class="f-grid c2">
+    <div><label data-i18n="amount">Amount (PKR)</label><input id="payAmt" required type="number" min="1"></div>
+    <div><label data-i18n="payType">Type</label><select id="payType"><option>Advance</option><option>Partial</option><option>Final</option></select></div>
+    <div><label data-i18n="payMethod">Method</label><select id="payMethod2"><option>Cash</option><option>Bank Transfer</option><option>Online</option></select></div>
+    <div><label data-i18n="date">Date</label><input id="payDate" type="date"></div>
+    <div style="grid-column:1/-1"><label>Note</label><input id="payNote" type="text"></div>
+  </div>
+  <button class="btn btn-gold btn-block" type="submit" style="margin-top:14px"><span data-i18n="savePayment">Save Payment</span></button></form>
+</div></div>
+
+<!-- EXPENSE MODAL -->
+<div class="modal-bg" id="expModal"><div class="modal">
+  <div class="m-head"><h3 id="expModalTitle">Add Expense</h3><button class="m-close" data-close="expModal" type="button">✕</button></div>
+  <form id="expForm"><div class="f-grid c2">
+    <div><label data-i18n="category">Category</label><select id="expCat">
+      <option>Food Purchases</option><option>Staff Salaries</option><option>Electricity</option><option>Gas</option><option>Generator Fuel</option><option>Maintenance</option><option>Decoration</option><option>Other</option></select></div>
+    <div><label data-i18n="amount">Amount (PKR)</label><input id="expAmt" required type="number" min="1"></div>
+    <div><label data-i18n="date">Date</label><input id="expDate" type="date"></div>
+    <div><label>Note</label><input id="expNote" type="text"></div>
+  </div>
+  <button class="btn btn-gold btn-block" type="submit" style="margin-top:14px"><span data-i18n="saveExpense">Save Expense</span></button></form>
+</div></div>
+
+<!-- INVOICE MODAL -->
+<div class="modal-bg" id="invModal"><div class="modal">
+  <div class="m-head"><h3 id="invTitle">Invoice</h3><button class="m-close" data-close="invModal" type="button">✕</button></div>
+  <div id="invPreview" style="background:#fff;border-radius:10px;overflow:hidden"></div>
+  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+    <button class="btn btn-gold" id="invPrintA4" type="button" style="flex:1">🖨 A4 <span data-i18n="printPdf">Print / PDF</span></button>
+    <button class="btn" id="invPrintT" type="button" style="flex:1">🧾 80mm <span data-i18n="printPdf">Print / PDF</span></button>
+  </div>
+</div></div>
+
+<div id="printArea"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+var KEY="eden_erp_phone_v1";
+var I18N={
+ en:{dashboard:"Dashboard",bookings:"Bookings",pos:"POS Bill",expenses:"Expenses",customers:"Customers",reports:"Reports",settings:"Settings",lock:"Lock",enterPin:"Enter PIN to unlock",revVsExp:"Last 7 days — Revenue vs Expenses (PKR)",todayEvents:"Today's Events",upcoming:"Upcoming Events",availDates:"Available Booking Dates — next 14 days",newBooking:"New Booking",posBilling:"POS Billing",billingHistory:"Billing History",fromBooking:"From Booking (optional)",custName:"Customer Name",phone:"Phone",eventDate:"Event Date",guests:"Number of Guests",perHead:"Per Head Rate (PKR)",cateringCharges:"Catering Charges",hallRent:"Stage Charges (PKR)",stageCharges:"Stage Charges (PKR)",additional:"Additional Charges (PKR)",discount:"Discount (PKR)",paidAmt:"Paid Amount (PKR)",payMethod:"Payment Method",invFormat:"Invoice Format",salesTax:"FBR Tax",fbrTax:"FBR Tax",fbrTaxAmt:"FBR Tax (PKR)",taxPct:"FBR Tax",taxMode:"Tax Mode",taxPercent:"Percentage",taxFixed:"Fixed Amount",taxAmt:"FBR Tax (PKR)",eventTiming:"Event Timing",kitchenCharges:"Kitchen Charges",kitchenAmt:"Kitchen Charges Amount (PKR)",stageCharges:"Stage Charges (PKR)",bookingCalendar:"Booking Calendar",prevMonth:"Prev",nextMonth:"Next",saveInvoice:"Save Invoice",clear:"Clear",addExpense:"Add Expense",reportType:"Report Type",month:"Month",date:"Date",generate:"Generate",printPdf:"Print / PDF",hallDetails:"Hall Details",hallName:"Hall Name",address:"Address",currency:"Currency",defPerHead:"Default Per Head Rate (PKR)",defTax:"FBR Tax (Fixed)",defFormat:"Default Invoice Format",halls:"Halls",manageHalls:"Manage Halls",hallsNote:"Add each hall with its name and hall number (e.g. Hall 1, Hall 2, Royal Hall). Added halls appear in the booking form's hall dropdown, and double-booking is prevented separately for each hall — the same hall cannot be booked twice for the same Day or Night slot on the same date. Daily limit for the whole marquee: maximum 4 functions per date — 2 Day and 2 Night.",hallNumber:"Hall Number",eachHallName:"Hall Name",addHall:"Add Hall",updateHall:"Update Hall",cancelEdit:"Cancel Edit",defaultHall:"Default",editItem:"Edit",deleteItem:"Delete",saveSettings:"Save Settings",pinLock:"PIN Lock",pinNote:"Set a 4-digit PIN to lock the app on open. Leave empty to remove.",newPin:"New PIN (4 digits)",savePin:"Save PIN",backup:"Backup & Restore",backupNote:"All data is saved on this phone. Download a backup file regularly and keep it safe.",downloadBackup:"Download Backup",restoreBackup:"Restore Backup",language:"Language",eventType:"Event Type",hall:"Hall",eventTime:"Event Timing",eventTiming:"Event Timing",advance:"Advance Payment (PKR)",status:"Status",instructions:"Special Instructions",saveBooking:"Save Booking",addPayment:"Add Payment",amount:"Amount (PKR)",payType:"Type",savePayment:"Save Payment",category:"Category",saveExpense:"Save Expense",appearance:"Appearance",themeNote:"Choose Dark or Light theme. Your choice is saved on this phone and stays after reopening the app.",dark:"Dark",light:"Light"},
+ ur:{dashboard:"ڈیش بورڈ",bookings:"بکنگز",pos:"بل بنائیں",expenses:"اخراجات",customers:"کسٹمرز",reports:"رپورٹس",settings:"سیٹنگز",lock:"لاک",enterPin:"کھولنے کے لیے PIN لکھیں",revVsExp:"پچھلے 7 دن — آمدنی بمقابلہ اخراجات (روپے)",todayEvents:"آج کے ایونٹس",upcoming:"آنے والے ایونٹس",availDates:"دستیاب بکنگ تاریخیں — اگلے 14 دن",newBooking:"نئی بکنگ",posBilling:"POS بلنگ",billingHistory:"بلنگ ہسٹری",fromBooking:"بکنگ سے (اختیاری)",custName:"کسٹمر کا نام",phone:"فون",eventDate:"ایونٹ کی تاریخ",guests:"مہمانوں کی تعداد",perHead:"فی مہمان ریٹ (روپے)",cateringCharges:"کیٹرنگ چارجز",hallRent:"اسٹیج چارجز (روپے)",stageCharges:"اسٹیج چارجز (روپے)",additional:"اضافی چارجز (روپے)",discount:"رعایت (روپے)",paidAmt:"ادا شدہ رقم (روپے)",payMethod:"ادائیگی کا طریقہ",invFormat:"انوائس فارمیٹ",salesTax:"FBR ٹیکس",fbrTax:"FBR ٹیکس",fbrTaxAmt:"FBR ٹیکس (روپے)",taxPct:"FBR ٹیکس",taxMode:"ٹیکس کا طریقہ",taxPercent:"فیصد",taxFixed:"مقررہ رقم",taxAmt:"FBR ٹیکس (روپے)",eventTiming:"ایونٹ کا وقت (دن / رات)",kitchenCharges:"کچن چارجز",kitchenAmt:"کچن چارجز رقم (روپے)",stageCharges:"اسٹیج چارجز (روپے)",bookingCalendar:"بکنگ کیلنڈر",prevMonth:"پچھلا",nextMonth:"اگلا",saveInvoice:"انوائس محفوظ کریں",clear:"صاف کریں",addExpense:"خرچ شامل کریں",reportType:"رپورٹ کی قسم",month:"مہینہ",date:"تاریخ",generate:"بنائیں",printPdf:"پرنٹ / PDF",hallDetails:"ہال کی تفصیل",hallName:"ہال کا نام",address:"پتہ",currency:"کرنسی",defPerHead:"طے شدہ فی مہمان ریٹ (روپے)",defTax:"FBR ٹیکس (مقررہ)",defFormat:"طے شدہ انوائس فارمیٹ",halls:"ہالز",manageHalls:"ہالز کا انتظام",hallsNote:"ہر ہال اس کے نام اور ہال نمبر کے ساتھ شامل کریں (مثلاً ہال 1، ہال 2، رائل ہال)۔ شامل کیے گئے ہال بکنگ فارم کے ہال ڈراپ ڈاؤن میں نظر آئیں گے، اور ڈبل بکنگ ہر ہال کے لیے الگ روکی جائے گی — اسی تاریخ اور وقت پر دوسرے ہال میں بکنگ ہو سکتی ہے۔",hallNumber:"ہال نمبر",eachHallName:"ہال کا نام",addHall:"ہال شامل کریں",updateHall:"ہال اپڈیٹ کریں",cancelEdit:"ترمیم منسوخ کریں",defaultHall:"طے شدہ",editItem:"ترمیم",deleteItem:"حذف کریں",saveSettings:"سیٹنگز محفوظ کریں",pinLock:"PIN لاک",pinNote:"ایپ کھلنے پر لاک کے لیے 4 ہندسوں کا PIN لگائیں۔ ختم کرنے کے لیے خالی چھوڑیں۔",newPin:"نیا PIN (4 ہندسے)",savePin:"PIN محفوظ کریں",backup:"بیک اپ اور بحالی",backupNote:"تمام ڈیٹا اسی فون میں محفوظ ہوتا ہے۔ باقاعدگی سے بیک اپ فائل ڈاؤن لوڈ کر کے محفوظ رکھیں۔",downloadBackup:"بیک اپ ڈاؤن لوڈ کریں",restoreBackup:"بیک اپ بحال کریں",language:"زبان",eventType:"ایونٹ کی قسم",hall:"ہال",eventTime:"ایونٹ کا وقت (دن / رات)",eventTiming:"ایونٹ کا وقت (دن / رات)",advance:"ایڈوانس ادائیگی (روپے)",status:"اسٹیٹس",instructions:"خصوصی ہدایات",saveBooking:"بکنگ محفوظ کریں",addPayment:"ادائیگی شامل کریں",amount:"رقم (روپے)",payType:"قسم",savePayment:"ادائیگی محفوظ کریں",category:"زمرہ",saveExpense:"خرچ محفوظ کریں",appearance:"تھیم",themeNote:"ڈارک یا لائٹ تھیم منتخب کریں۔ آپ کی پسند اسی فون میں محفوظ رہے گی اور ایپ دوبارہ کھولنے پر بھی برقرار رہے گی۔",dark:"ڈارک",light:"لائٹ"}
+};
+function defaults(){return {settings:{hallName:"Eden Royal Marquee",address:"",contact:"",currency:"PKR",defaultPerHead:0,defaultTax:5,invoiceFormat:"A4",pin:"",halls:[{id:"hall-main",name:"Main Hall",number:""}]},bookings:[],payments:[],invoices:[],expenses:[],invoiceSeq:1,lang:"en"};}
+var DB;
+try{DB=JSON.parse(localStorage.getItem(KEY))||defaults();}catch(e){DB=defaults();}
+if(!DB.settings)DB=defaults();
+/* Halls are stored as {id,name,number} objects. Older data / backups may hold plain
+   name strings ("Main Hall") — normalizeHalls upgrades them in place, keeping the
+   default Main Hall first and stable. A hall's label (name + number) is what bookings
+   store, so double-booking stays per-hall. */
+function normalizeHalls(){
+  if(!DB.settings)DB.settings=defaults().settings;
+  var raw=Array.isArray(DB.settings.halls)?DB.settings.halls:[];
+  var out=[];
+  raw.forEach(function(h,i){
+    if(typeof h==="string"){var nm=h.trim();if(nm)out.push({id:nm==="Main Hall"?"hall-main":"hall-"+i+"-"+nm.toLowerCase().replace(/[^a-z0-9]+/g,"-"),name:nm,number:""});}
+    else if(h&&typeof h==="object"){var nm2=String(h.name||h.label||"").trim();if(nm2)out.push({id:h.id?String(h.id):("hall-"+i),name:nm2,number:String(h.number==null?"":h.number).trim()});}
+  });
+  if(!out.length)out=[{id:"hall-main",name:"Main Hall",number:""}];
+  if(out[0].name==="Main Hall")out[0].id="hall-main";
+  DB.settings.halls=out;
+  return out;
+}
+function getHalls(){return (DB.settings&&Array.isArray(DB.settings.halls)&&DB.settings.halls.length&&typeof DB.settings.halls[0]==="object")?DB.settings.halls:normalizeHalls();}
+function hallLabel(h){
+  if(!h)return "";
+  var nm=String(h.name||"").trim(), no=String(h.number==null?"":h.number).trim();
+  if(!no)return nm;
+  var low=nm.toLowerCase(), pre="hall "+no.toLowerCase();
+  if(low===pre||low.indexOf(pre+" ")===0||low.indexOf(pre+"-")===0||low.indexOf(pre+"—")===0)return nm;
+  return "Hall "+no+" — "+nm;
+}
+normalizeHalls();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){toast("Storage full / unavailable",true);}}
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function num(v){var n=parseFloat(v);return isNaN(n)?0:n;}
+function fmt(n){return "Rs "+Math.round(num(n)).toLocaleString("en-US");}
+var FBR_TAX=10000;
+function fmtD(iso){if(!iso)return "";var m=String(iso).match(/^(\d{4})-(\d{2})-(\d{2})/);if(!m)return String(iso);return m[3]+"-"+m[2]+"-"+m[1];}
+function monthLabel(ym){if(!ym)return "";var parts=String(ym).split("-");var names=["January","February","March","April","May","June","July","August","September","October","November","December"];var mi=parseInt(parts[1],10)-1;return (names[mi]||parts[1])+" "+parts[0];}
+function timingOf(b){if(!b)return "Night";if(b.timing==="Day"||b.timing==="Night")return b.timing;if(b.time){var h=parseInt(String(b.time).split(":")[0],10);return (!isNaN(h)&&h>=5&&h<17)?"Day":"Night";}return "Night";}
+function slotCounts(date,excludeId){var day=0,night=0;DB.bookings.forEach(function(b){if(b.date!==date||b.status==="Cancelled"||b.id===excludeId)return;if(timingOf(b)==="Day")day++;else night++;});return {day:day,night:night,total:day+night,remaining:4-(day+night)};}
+function hallConflict(date,timing,hall,excludeId){if(!date||!hall)return null;var want=String(hall).trim();var tm=(timing==="Day"||timing==="Night")?timing:"Night";var found=null;DB.bookings.forEach(function(b){if(found)return;if(b.date!==date||b.status==="Cancelled"||b.id===excludeId)return;if(String(b.hall||"").trim()!==want)return;if(timingOf(b)!==tm)return;found=b;});return found;}
+function hallConflictMsg(hall,timing,date){return "Hall Already Booked! "+hall+" is already booked for "+timing+" on "+fmtD(date)+". Please select another hall or timing.";}
+function migrateData(){var changed=false;DB.bookings.forEach(function(b){if(b.timing!=="Day"&&b.timing!=="Night"){b.timing=timingOf(b);changed=true;}});DB.invoices.forEach(function(i){if(i.hallRent!=null&&i.stageCharges==null){i.stageCharges=i.hallRent;changed=true;}if(i.kitchenOn==null){i.kitchenOn=false;i.kitchenAmt=0;changed=true;}});if(changed)save();}
+
+function todayISO(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function monthISO(){return todayISO().slice(0,7);}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function toast(msg,err){var t=$("toast");t.textContent=msg;t.className="toast show"+(err?" err":"");setTimeout(function(){t.className="toast";},2600);}
+function t(k){return (I18N[DB.lang]&&I18N[DB.lang][k])||I18N.en[k]||k;}
+function applyLang(){
+  document.documentElement.lang=DB.lang==="ur"?"ur":"en";
+  document.documentElement.dir=DB.lang==="ur"?"rtl":"ltr";
+  document.querySelectorAll("[data-i18n]").forEach(function(el){el.textContent=t(el.getAttribute("data-i18n"));});
+  $("langBtn").textContent=DB.lang==="ur"?"English":"اردو";
+  $("lockBtn").style.display=DB.settings.pin?"inline-flex":"none";
+}
+/* ---------- calculations ---------- */
+function bkFood(b){return num(b.guests)*num(b.perHead);}
+function bkTotal(b){return bkFood(b)+num(b.hallRent)+num(b.additional)-num(b.discount)+FBR_TAX;}
+function bkPaid(id){return DB.payments.filter(function(p){return p.bookingId===id;}).reduce(function(s,p){return s+num(p.amount);},0);}
+function bkDue(b){return bkTotal(b)-bkPaid(b.id);}
+function activeBookings(){return DB.bookings.filter(function(b){return b.status!=="Cancelled";});}
+function payCounts(p){var b=DB.bookings.filter(function(x){return x.id===p.bookingId;})[0];return !b||b.status!=="Cancelled";}
+function totalRevenue(){return DB.payments.filter(payCounts).reduce(function(s,p){return s+num(p.amount);},0)+DB.invoices.filter(function(i){return !i.bookingId;}).reduce(function(s,i){return s+num(i.paid);},0);}
+function totalExpenses(){return DB.expenses.reduce(function(s,e){return s+num(e.amount);},0);}
+/* ---------- navigation ---------- */
+var currentView="dashboard";
+function show(view){
+  currentView=view;
+  document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
+  $("view-"+view).classList.add("active");
+  document.querySelectorAll("#bottomNav button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-view")===view);});
+  render();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("#bottomNav button").forEach(function(b){b.addEventListener("click",function(){show(b.getAttribute("data-view"));});});
+function openModal(id){$(id).classList.add("open");}
+function closeModal(id){$(id).classList.remove("open");}
+document.querySelectorAll("[data-close]").forEach(function(b){b.addEventListener("click",function(){closeModal(b.getAttribute("data-close"));});});
+document.querySelectorAll(".modal-bg").forEach(function(m){m.addEventListener("click",function(e){if(e.target===m)m.classList.remove("open");});});
+/* ---------- dashboard ---------- */
+function renderDashboard(){
+  var today=todayISO(), mo=monthISO();
+  var act=activeBookings();
+  var todays=act.filter(function(b){return b.date===today;});
+  var upcoming=act.filter(function(b){return b.date>=today;}).sort(function(a,b){return a.date<b.date?-1:1;});
+  var pending=act.reduce(function(s,b){var d=bkDue(b);return s+(d>0?d:0);},0);
+  var moRev=DB.payments.filter(function(p){return (p.date||"").slice(0,7)===mo&&payCounts(p);}).reduce(function(s,p){return s+num(p.amount);},0)+DB.invoices.filter(function(i){return !i.bookingId&&(i.date||"").slice(0,7)===mo;}).reduce(function(s,i){return s+num(i.paid);},0);
+  var moExp=DB.expenses.filter(function(e){return (e.date||"").slice(0,7)===mo;}).reduce(function(s,e){return s+num(e.amount);},0);
+  var cards=[
+    ["Total Bookings",act.length,""],["Today's Events",todays.length,"gold"],["Upcoming Events",upcoming.length,""],
+    ["Total Revenue",fmt(totalRevenue()),"green"],["Pending Payments",fmt(pending),"red"],
+    ["Total Expenses",fmt(totalExpenses()),""],["Monthly Profit",fmt(moRev-moExp),moRev-moExp>=0?"green":"red"],
+    ["This Month Revenue",fmt(moRev),"gold"]];
+  $("dashStats").innerHTML=cards.map(function(c){return '<div class="stat"><div class="k">'+esc(c[0])+'</div><div class="v '+c[2]+'">'+esc(c[1])+'</div></div>';}).join("");
+  $("dashToday").innerHTML=todays.length?todays.map(bkMini).join(""):'<p class="meta">No events today.</p>';
+  $("dashUpcoming").innerHTML=upcoming.length?upcoming.slice(0,5).map(bkMini).join(""):'<p class="meta">No upcoming events yet. Add a booking to get started.</p>';
+  var out=[];
+  for(var i=0;i<14;i++){var d=new Date();d.setDate(d.getDate()+i);var iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    var c=slotCounts(iso,null);
+    var col=c.total>=4?"var(--red)":(c.total>0?"var(--amber)":"var(--green)");
+    var lbl=c.total>=4?"FULL":(c.total===0?"Available":c.total+"/4 Bookings");
+    out.push("<div><b>"+esc(fmtD(iso))+"</b> — <span style=\"color:"+col+";font-weight:700\">"+lbl+"</span> · Day "+c.day+"/2 · Night "+c.night+"/2 · "+c.remaining+" slot(s) left</div>");}
+  $("dashAvail").innerHTML=out.join("");
+  /* 7 day chart */
+  var days=[],max=1;
+  for(var j=6;j>=0;j--){var dd=new Date();dd.setDate(dd.getDate()-j);var iso2=dd.getFullYear()+"-"+String(dd.getMonth()+1).padStart(2,"0")+"-"+String(dd.getDate()).padStart(2,"0");
+    var rev=DB.payments.filter(function(p){return p.date===iso2&&payCounts(p);}).reduce(function(s,p){return s+num(p.amount);},0)+DB.invoices.filter(function(x){return !x.bookingId&&x.date===iso2;}).reduce(function(s,x){return s+num(x.paid);},0);
+    var exp=DB.expenses.filter(function(e){return e.date===iso2;}).reduce(function(s,e){return s+num(e.amount);},0);
+    days.push({d:iso2.slice(8,10)+"-"+iso2.slice(5,7),rev:rev,exp:exp});max=Math.max(max,rev,exp);}
+  var W=640,H=170,bw=34,gap=(W-20)/7;
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto" role="img" aria-label="Revenue versus expenses chart">';
+  svg+='<line x1="10" y1="'+(H-28)+'" x2="'+(W-10)+'" y2="'+(H-28)+'" stroke="var(--line)"/>';
+  days.forEach(function(dy,i){var x=20+i*gap;var rh=Math.max(2,(dy.rev/max)*(H-50));var eh=Math.max(2,(dy.exp/max)*(H-50));
+    svg+='<rect x="'+x+'" y="'+(H-28-rh)+'" width="'+bw+'" height="'+rh+'" fill="#c9a227" rx="3"><title>Revenue '+dy.d+': '+fmt(dy.rev)+'</title></rect>';
+    svg+='<rect x="'+(x+bw+4)+'" y="'+(H-28-eh)+'" width="'+bw+'" height="'+eh+'" fill="#e0655f" rx="3"><title>Expenses '+dy.d+': '+fmt(dy.exp)+'</title></rect>';
+    svg+='<text x="'+(x+bw/2+2)+'" y="'+(H-10)+'" font-size="11" fill="var(--muted)" text-anchor="middle">'+dy.d+'</text>';});
+  svg+='</svg><div class="meta"><span style="color:var(--gold2)">■</span> Revenue &nbsp; <span style="color:var(--red)">■</span> Expenses</div>';
+  $("chart7").innerHTML=svg;
+}
+function bkMini(b){return '<div style="padding:7px 0;border-bottom:1px solid var(--line)"><b>'+esc(b.customerName)+'</b> <span class="badge b-'+b.status+'">'+b.status+'</span><div class="meta">'+esc(fmtD(b.date))+' · '+esc(timingOf(b))+' · '+esc(b.eventType)+' · '+esc(b.hall)+' · '+b.guests+' guests</div></div>';}
+/* ---------- bookings ---------- */
+var bkFilter="All", editingBk=null;
+function fillHallSelect(sel,val){sel.innerHTML=getHalls().map(function(h){var lb=hallLabel(h);return '<option value="'+esc(lb)+'"'+(lb===val?" selected":"")+'>'+esc(lb)+'</option>';}).join("");}
+function bkCalcHTML(g,ph,rent,add,disc,paid){
+  var food=num(g)*num(ph),sub=food+num(rent)+num(add),tot=sub-num(disc)+FBR_TAX;
+  return '<div class="calc-row"><span>'+t("cateringCharges")+' ('+num(g)+' × '+fmt(ph)+')</span><span>'+fmt(food)+'</span></div>'+
+  '<div class="calc-row"><span>Stage Charges</span><span>'+fmt(rent)+'</span></div>'+
+  '<div class="calc-row"><span>Additional</span><span>'+fmt(add)+'</span></div>'+
+  '<div class="calc-row"><span>Discount</span><span>− '+fmt(disc)+'</span></div>'+
+  '<div class="calc-row"><span>FBR Tax (Fixed)</span><span>'+fmt(FBR_TAX)+'</span></div>'+
+  '<div class="calc-row total"><span>Total Bill</span><span>'+fmt(tot)+'</span></div>'+
+  '<div class="calc-row"><span>Paid</span><span>'+fmt(paid)+'</span></div>'+
+  '<div class="calc-row due"><span>Remaining Balance</span><span>'+fmt(Math.max(0,tot-num(paid)))+'</span></div>';
+}
+function renderBookings(){
+  fillHallSelect($("bkHall"));
+  var q=($("bookingSearch").value||"").toLowerCase();
+  var list=DB.bookings.slice().sort(function(a,b){return a.date<b.date?1:-1;}).filter(function(b){
+    if(bkFilter!=="All"&&b.status!==bkFilter)return false;
+    if(q&&!(b.customerName.toLowerCase().indexOf(q)>-1||(b.phone||"").indexOf(q)>-1))return false;return true;});
+  if(!list.length){$("bookingList").innerHTML='<div class="empty"><b>No bookings found</b>Tap “+ New Booking” to create the first booking.</div>';return;}
+  $("bookingList").innerHTML=list.map(function(b){
+    var due=bkDue(b);
+    return '<div class="list-item"><div class="row1"><div><div class="t">'+esc(b.customerName)+'</div>'+
+    '<div class="meta">'+esc(b.eventType)+' · '+esc(fmtD(b.date))+' · '+esc(timingOf(b))+'<br>'+esc(b.hall)+' · '+b.guests+' guests · '+esc(b.phone)+'</div></div>'+
+    '<span class="badge b-'+b.status+'">'+b.status+'</span></div>'+
+    '<div class="meta" style="margin-top:6px">Total <b style="color:var(--ink)">'+fmt(bkTotal(b))+'</b> · Paid '+fmt(bkPaid(b.id))+' · Due <b style="color:'+(due>0?"var(--red)":"var(--green)")+'">'+fmt(Math.max(0,due))+'</b></div>'+
+    '<div class="actions"><button class="btn btn-sm" data-act="view" data-id="'+b.id+'" type="button">View</button>'+
+    '<button class="btn btn-sm" data-act="edit" data-id="'+b.id+'" type="button">Edit</button>'+
+    '<button class="btn btn-sm" data-act="pay" data-id="'+b.id+'" type="button">+ Payment</button>'+
+    '<button class="btn btn-sm" data-act="bill" data-id="'+b.id+'" type="button">🧾 Bill</button>'+
+    (b.status!=="Cancelled"?'<button class="btn btn-sm btn-danger" data-act="cancel" data-id="'+b.id+'" type="button">Cancel</button>':"")+
+    '<button class="btn btn-sm btn-danger" data-act="del" data-id="'+b.id+'" type="button">Delete</button></div></div>';}).join("");
+  $("bookingList").querySelectorAll("button[data-act]").forEach(function(btn){btn.addEventListener("click",function(){bkAction(btn.getAttribute("data-act"),btn.getAttribute("data-id"));});});
+  if(bkView==="calendar")renderCalendar();
+}
+function bkAction(act,id){
+  var b=DB.bookings.filter(function(x){return x.id===id;})[0];if(!b)return;
+  if(act==="view")showDetail(b);
+  if(act==="edit")openBookingForm(b);
+  if(act==="pay")openPay(b);
+  if(act==="bill"){show("pos");setTimeout(function(){var sel=$("posBooking");sel.value=id;posFromBooking();},30);}
+  if(act==="cancel"){if(confirmAction("cancel:"+id,"Cancel this booking?")){b.status="Cancelled";save();render();toast("Booking cancelled");}}
+  if(act==="del"){if(confirmAction("del:"+id,"Delete this booking and its payments permanently?")){DB.bookings=DB.bookings.filter(function(x){return x.id!==id;});DB.payments=DB.payments.filter(function(p){return p.bookingId!==id;});save();render();toast("Deleted");}}
+}
+function confirmAction(key,msg){ /* double-tap confirm, keyed per item so one item's pending confirm never confirms another */
+  var k="cf:"+key;
+  return window.__cf===k ? (window.__cf=null,true) : (window.__cf=k, toast(msg+" — tap again to confirm",true), false);
+}
+function blankNum(v){return (v==null||num(v)===0)?"":v;}
+function openBookingForm(b){
+  editingBk=b?b.id:null;
+  $("bkModalTitle").textContent=b?"Edit Booking":"New Booking";
+  fillHallSelect($("bkHall"),b?b.hall:null);
+  $("bkName").value=b?b.customerName:"";$("bkPhone").value=b?b.phone:"";
+  $("bkType").value=b?b.eventType:"Wedding";$("bkDate").value=b?b.date:todayISO();
+  $("bkTiming").value=b?timingOf(b):"Night";
+  $("bkGuests").value=b?blankNum(b.guests):"";$("bkPerHead").value=b?blankNum(b.perHead):blankNum(DB.settings.defaultPerHead||"");
+  $("bkRent").value=b?blankNum(b.hallRent):"";$("bkAdd").value=b?blankNum(b.additional):"";$("bkDisc").value=b?blankNum(b.discount):"";
+  $("bkAdvance").value="";$("bkAdvance").disabled=!!b;
+  $("bkStatus").value=b?b.status:"Confirmed";$("bkNotes").value=b?(b.instructions||""):"";
+  $("bkErr").textContent="";updateBkCalc();updateSlotUI();openModal("bookingModal");
+}
+var MSG_DAY_FULL="Day Booking Limit Reached! Both Day Slots Are Already Booked.";
+var MSG_NIGHT_FULL="Night Booking Limit Reached! Both Night Slots Are Already Booked.";
+var MSG_ALL_FULL="Booking Limit Reached! All 4 Function Slots for This Date Are Already Booked. Please Select Another Date.";
+function updateSlotUI(){
+  var date=$("bkDate").value;var sel=$("bkTiming");if(!date||!sel)return;
+  var status=$("bkStatus").value;
+  var hallEl=$("bkHall");var hall=hallEl?hallEl.value:"";
+  var c=(status==="Cancelled")?{day:0,night:0,total:0,remaining:4}:slotCounts(date,editingBk);
+  var dayOpt=sel.querySelector('option[value="Day"]'),nightOpt=sel.querySelector('option[value="Night"]');
+  if(dayOpt)dayOpt.disabled=c.day>=2;
+  if(nightOpt)nightOpt.disabled=c.night>=2;
+  var conflict=(status==="Cancelled")?null:hallConflict(date,sel.value,hall,editingBk);
+  var warn=$("bkSlotWarn"),info=$("bkSlotInfo"),msg="";
+  if(status!=="Cancelled"){
+    if(c.total>=4)msg=MSG_ALL_FULL;
+    else if(sel.value==="Day"&&c.day>=2)msg=MSG_DAY_FULL;
+    else if(sel.value==="Night"&&c.night>=2)msg=MSG_NIGHT_FULL;
+    else if(conflict)msg=hallConflictMsg(hall,sel.value,date);
+    else if(c.day>=2)msg=MSG_DAY_FULL;
+    else if(c.night>=2)msg=MSG_NIGHT_FULL;
+  }
+  if(warn){warn.style.display=msg?"block":"none";warn.textContent=msg?"\u26a0 "+msg:"";}
+  if(info){
+    var hallLine="";
+    if(hall){
+      var hDay=hallConflict(date,"Day",hall,editingBk),hNight=hallConflict(date,"Night",hall,editingBk);
+      hallLine="<br>"+esc(hall)+" — Day: "+(hDay?"Booked":"Free")+" · Night: "+(hNight?"Booked":"Free");
+    }
+    info.innerHTML="Slots on <b>"+esc(fmtD(date))+"</b> — Day: "+c.day+"/2 · Night: "+c.night+"/2 · Total: "+c.total+"/4 · Remaining: "+Math.max(0,c.remaining)+hallLine;
+  }
+  return c;
+}
+function updateBkCalc(){
+  var paid=editingBk?bkPaid(editingBk):num($("bkAdvance").value);
+  $("bkCalc").innerHTML=bkCalcHTML($("bkGuests").value,$("bkPerHead").value,$("bkRent").value,$("bkAdd").value,$("bkDisc").value,paid);
+}
+["bkGuests","bkPerHead","bkRent","bkAdd","bkDisc","bkAdvance"].forEach(function(id){$(id).addEventListener("input",updateBkCalc);});
+["bkDate","bkTiming","bkStatus","bkHall"].forEach(function(id){$(id).addEventListener("change",updateSlotUI);});
+$("newBookingBtn").addEventListener("click",function(){openBookingForm(null);});
+$("bookingForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var date=$("bkDate").value,timing=$("bkTiming").value,hall=$("bkHall").value,status=$("bkStatus").value;
+  if(status!=="Cancelled"){
+    var sc=slotCounts(date,editingBk);
+    if(sc.total>=4){$("bkErr").textContent="⚠ "+MSG_ALL_FULL;updateSlotUI();return;}
+    if(timing==="Day"&&sc.day>=2){$("bkErr").textContent="⚠ "+MSG_DAY_FULL;updateSlotUI();return;}
+    if(timing==="Night"&&sc.night>=2){$("bkErr").textContent="⚠ "+MSG_NIGHT_FULL;updateSlotUI();return;}
+    if(hallConflict(date,timing,hall,editingBk)){$("bkErr").textContent="⚠ "+hallConflictMsg(hall,timing,date);updateSlotUI();return;}
+  }
+  if(!$("bkName").value.trim()){$("bkErr").textContent="⚠ Customer name is required.";return;}
+  var bkSub=num($("bkGuests").value)*num($("bkPerHead").value)+num($("bkRent").value)+num($("bkAdd").value);
+  if(num($("bkDisc").value)>bkSub){$("bkErr").textContent="⚠ Discount cannot be more than the bill amount ("+fmt(bkSub)+").";return;}
+  if(!editingBk&&num($("bkAdvance").value)>bkSub-num($("bkDisc").value)+FBR_TAX){$("bkErr").textContent="⚠ Advance cannot be more than the total bill ("+fmt(bkSub-num($("bkDisc").value)+FBR_TAX)+").";return;}
+  var data={customerName:$("bkName").value.trim(),phone:$("bkPhone").value.trim(),eventType:$("bkType").value,hall:hall,date:date,timing:timing,time:"",
+    guests:num($("bkGuests").value),perHead:num($("bkPerHead").value),hallRent:num($("bkRent").value),additional:num($("bkAdd").value),
+    discount:num($("bkDisc").value),status:status,instructions:$("bkNotes").value.trim()};
+  if(editingBk){var b=DB.bookings.filter(function(x){return x.id===editingBk;})[0];Object.assign(b,data);toast("Booking updated");}
+  else{data.id=uid();data.createdAt=todayISO();DB.bookings.push(data);
+    var adv=num($("bkAdvance").value);
+    if(adv>0)DB.payments.push({id:uid(),bookingId:data.id,amount:adv,method:$("bkAdvMethod").value,type:"Advance",date:todayISO(),note:"Advance with booking"});
+    toast("Booking saved");}
+  save();closeModal("bookingModal");render();
+});
+$("bookingSearch").addEventListener("input",renderBookings);
+$("bookingFilter").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){
+  $("bookingFilter").querySelectorAll("button").forEach(function(x){x.classList.remove("on");});b.classList.add("on");bkFilter=b.getAttribute("data-f");renderBookings();});});
+/* ---------- booking calendar ---------- */
+var bkView="list";
+var _now=new Date();var calY=_now.getFullYear(),calM=_now.getMonth(),calSel=todayISO();
+document.querySelectorAll("#bkViewSeg button").forEach(function(b){b.addEventListener("click",function(){
+  document.querySelectorAll("#bkViewSeg button").forEach(function(x){x.classList.remove("on");});b.classList.add("on");
+  bkView=b.getAttribute("data-bkv");
+  $("bookingListWrap").style.display=bkView==="list"?"block":"none";
+  $("bookingCalWrap").style.display=bkView==="calendar"?"block":"none";
+  var seg=$("bookingFilter");if(seg)seg.style.display=bkView==="list"?"flex":"none";
+  var sr=document.querySelector("#view-bookings .search-row");if(sr)sr.style.display=bkView==="list"?"flex":"none";
+  if(bkView==="calendar")renderCalendar();
+});});
+$("calPrev").addEventListener("click",function(){calM--;if(calM<0){calM=11;calY--;}renderCalendar();});
+$("calNext").addEventListener("click",function(){calM++;if(calM>11){calM=0;calY++;}renderCalendar();});
+function renderCalendar(){
+  var names=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  $("calTitle").textContent=names[calM]+" "+calY;
+  $("calDow").innerHTML=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(function(d){return '<div class="cal-dow">'+d+'</div>';}).join("");
+  var first=new Date(calY,calM,1);var startDay=(first.getDay()+6)%7;var dim=new Date(calY,calM+1,0).getDate();
+  var today=todayISO();var html="";
+  for(var i=0;i<startDay;i++)html+='<span class="cal-cell blank"></span>';
+  for(var d=1;d<=dim;d++){
+    var iso=calY+"-"+String(calM+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+    var c=slotCounts(iso,null);
+    var cls=c.total>=4?"full":(c.total>0?"partial":"avail");
+    if(iso<today)cls+=" past";
+    if(iso===today)cls+=" today";
+    if(iso===calSel)cls+=" sel";
+    var lbl=c.total>=4?"4/4 FULL":(c.total===0?"0/4 Available":c.total+"/4 Bookings");
+    html+='<button type="button" class="cal-cell '+cls+'" data-caldate="'+iso+'"><span class="dnum">'+d+'</span><div class="cnt">'+lbl+'<br>Day '+c.day+'/2 · Night '+c.night+'/2</div></button>';
+  }
+  $("calGrid").innerHTML=html;
+  $("calGrid").querySelectorAll("button[data-caldate]").forEach(function(b){b.addEventListener("click",function(){calSel=b.getAttribute("data-caldate");renderCalendar();});});
+  renderCalDetail();
+}
+function renderCalDetail(){
+  var iso=calSel;var c=slotCounts(iso,null);
+  var all=DB.bookings.filter(function(b){return b.date===iso;}).slice().sort(function(a,b){return timingOf(a)<timingOf(b)?-1:1;});
+  var rows=all.length?all.map(function(b){
+    return '<div class="list-item" style="margin-bottom:8px"><div class="row1"><div><div class="t">'+esc(b.customerName)+'</div><div class="meta">'+esc(timingOf(b))+' · '+esc(b.eventType)+' · '+esc(b.hall)+' · '+b.guests+' guests</div></div><span class="badge b-'+b.status+'">'+b.status+'</span></div><div class="actions"><button class="btn btn-sm" data-calopen="'+b.id+'" type="button">Open Booking</button></div></div>';}).join(""):'<p class="meta">No bookings on this date.</p>';
+  $("calDetail").innerHTML='<h3 style="margin-bottom:8px">'+esc(fmtD(iso))+'</h3>'+
+    '<div class="meta" style="line-height:1.9">Day: <b>'+c.day+'/2 Booked</b> · Night: <b>'+c.night+'/2 Booked</b><br>Total: <b>'+c.total+'/4</b>'+(c.total>=4?' <b style="color:var(--red)">FULL</b>':'')+' · Remaining Slots: <b>'+Math.max(0,c.remaining)+'</b></div>'+
+    '<div style="margin-top:10px">'+rows+'</div>';
+  $("calDetail").querySelectorAll("button[data-calopen]").forEach(function(btn){btn.addEventListener("click",function(){
+    var b=DB.bookings.filter(function(x){return x.id===btn.getAttribute("data-calopen");})[0];if(b)showDetail(b);});});
+}
+/* ---------- detail + payments ---------- */
+var payBk=null;
+function showDetail(b){
+  $("dtTitle").textContent=b.customerName+" — "+b.eventType;
+  var pays=DB.payments.filter(function(p){return p.bookingId===b.id;});
+  var rows=pays.length?pays.map(function(p){return "<tr><td>"+esc(fmtD(p.date))+"</td><td>"+esc(p.type)+"</td><td>"+esc(p.method)+"</td><td class='num'>"+fmt(p.amount)+"</td></tr>";}).join(""):'<tr><td colspan="4" class="meta">No payments yet.</td></tr>';
+  $("dtBody").innerHTML='<div class="meta" style="line-height:1.9">'+
+    "📞 "+esc(b.phone)+" &nbsp;·&nbsp; 📅 "+esc(fmtD(b.date))+" · "+esc(timingOf(b))+"<br>🏛 "+esc(b.hall)+" · "+b.guests+" guests · Status: <b>"+b.status+"</b>"+
+    (b.instructions?("<br>📝 "+esc(b.instructions)):"")+"</div>"+
+    '<div class="calc-box" style="margin:12px 0">'+bkCalcHTML(b.guests,b.perHead,b.hallRent,b.additional,b.discount,bkPaid(b.id))+"</div>"+
+    '<h3 style="font-size:16px;margin-bottom:8px">Payment History</h3><div class="table-wrap"><table><tr><th>Date</th><th>Type</th><th>Method</th><th class="num">Amount</th></tr>'+rows+"</table></div>"+
+    '<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn btn-gold" id="dtPay" type="button" style="flex:1">+ Payment</button>'+
+    '<button class="btn" id="dtBill" type="button" style="flex:1">🧾 Create Bill</button></div>';
+  $("dtPay").addEventListener("click",function(){closeModal("detailModal");openPay(b);});
+  $("dtBill").addEventListener("click",function(){closeModal("detailModal");show("pos");setTimeout(function(){$("posBooking").value=b.id;posFromBooking();},30);});
+  openModal("detailModal");
+}
+function openPay(b){payBk=b.id;$("payAmt").value=Math.max(0,bkDue(b))||"";$("payDate").value=todayISO();$("payNote").value="";openModal("payModal");}
+$("payForm").addEventListener("submit",function(e){e.preventDefault();
+  if(num($("payAmt").value)<=0){toast("Payment amount must be more than 0",true);return;}
+  var pbk=DB.bookings.filter(function(x){return x.id===payBk;})[0];
+  if(pbk){var pdue=bkDue(pbk);if(num($("payAmt").value)>pdue){toast("Payment is more than the due balance ("+fmt(Math.max(0,pdue))+") — overpayment is not allowed",true);return;}}
+  DB.payments.push({id:uid(),bookingId:payBk,amount:num($("payAmt").value),method:$("payMethod2").value,type:$("payType").value,date:$("payDate").value||todayISO(),note:$("payNote").value.trim()});
+  save();closeModal("payModal");render();toast("Payment saved");});
+/* ---------- POS ---------- */
+function fillPosBookings(){
+  var sel=$("posBooking"),cur=sel.value;
+  sel.innerHTML='<option value="">— Walk-in bill —</option>'+activeBookings().slice().sort(function(a,b){return a.date<b.date?-1:1;}).map(function(b){
+    return '<option value="'+b.id+'">'+esc(b.customerName)+" · "+esc(fmtD(b.date))+" · "+esc(timingOf(b))+" · "+esc(b.eventType)+"</option>";}).join("");
+  sel.value=cur;
+}
+function posFromBooking(){
+  var id=$("posBooking").value;var b=DB.bookings.filter(function(x){return x.id===id;})[0];
+  if(!b){return;}
+  $("posName").value=b.customerName;$("posPhone").value=b.phone;$("posDate").value=b.date;
+  $("posTiming").value=timingOf(b);
+  $("posGuests").value=blankNum(b.guests);$("posPerHead").value=blankNum(b.perHead);$("posRent").value=blankNum(b.hallRent);
+  $("posAdd").value=blankNum(b.additional);$("posDisc").value=blankNum(b.discount);$("posPaid").value=blankNum(bkPaid(b.id));
+  $("posKitchenOn").checked=false;$("posKitchenAmt").value="";
+  updatePosCalc();
+}
+$("posBooking").addEventListener("change",posFromBooking);
+function posCalc(){
+  var food=num($("posGuests").value)*num($("posPerHead").value);
+  var kitchenOn=$("posKitchenOn").checked;
+  var kitchen=kitchenOn?num($("posKitchenAmt").value):0;
+  var sub=food+num($("posRent").value)+num($("posAdd").value)+kitchen;
+  var afterDisc=sub-num($("posDisc").value);
+  var taxOn=true;
+  var taxAmt=FBR_TAX;
+  var grand=afterDisc+taxAmt;
+  return {food:food,sub:sub,afterDisc:afterDisc,kitchenOn:kitchenOn,kitchenAmt:kitchen,taxOn:taxOn,taxMode:"fixed",pct:0,fixedAmt:FBR_TAX,taxAmt:taxAmt,grand:grand,paid:num($("posPaid").value),due:grand-num($("posPaid").value)};
+}
+function updatePosCalc(){
+  $("kitchenWrap").style.display=$("posKitchenOn").checked?"block":"none";
+  var c=posCalc();
+  var taxRow='<div class="calc-row"><span>FBR Tax (Fixed)</span><span>'+fmt(FBR_TAX)+'</span></div>';
+  var kitchenRow=c.kitchenOn?'<div class="calc-row"><span>Kitchen Charges</span><span>'+fmt(c.kitchenAmt)+'</span></div>':"";
+  $("posCalc").innerHTML=
+   '<div class="calc-row"><span>'+t("cateringCharges")+' ('+num($("posGuests").value)+' \u00d7 '+fmt($("posPerHead").value)+')</span><span>'+fmt(c.food)+'</span></div>'+
+   '<div class="calc-row"><span>Stage Charges</span><span>'+fmt($("posRent").value)+'</span></div>'+
+   '<div class="calc-row"><span>Additional Charges</span><span>'+fmt($("posAdd").value)+'</span></div>'+
+   kitchenRow+
+   '<div class="calc-row"><span>Subtotal</span><span>'+fmt(c.sub)+'</span></div>'+
+   '<div class="calc-row"><span>Discount</span><span>\u2212 '+fmt($("posDisc").value)+'</span></div>'+
+   taxRow+
+   '<div class="calc-row total"><span>Grand Total</span><span>'+fmt(c.grand)+'</span></div>'+
+   '<div class="calc-row"><span>Paid</span><span>'+fmt(c.paid)+'</span></div>'+
+   '<div class="calc-row due"><span>Remaining Balance</span><span>'+fmt(Math.max(0,c.due))+'</span></div>';
+}
+["posGuests","posPerHead","posRent","posAdd","posDisc","posPaid","posKitchenAmt"].forEach(function(id){$(id).addEventListener("input",updatePosCalc);});
+$("posKitchenOn").addEventListener("change",updatePosCalc);
+$("posReset").addEventListener("click",function(){
+  $("posBooking").value="";["posName","posPhone"].forEach(function(i){$(i).value="";});
+  ["posGuests","posRent","posAdd","posDisc","posPaid","posKitchenAmt"].forEach(function(i){$(i).value="";});
+  $("posPerHead").value=blankNum(DB.settings.defaultPerHead||"");$("posDate").value=todayISO();$("posTiming").value="Night";
+  $("posKitchenOn").checked=false;
+  updatePosCalc();});
+$("posSave").addEventListener("click",function(){
+  var c=posCalc();
+  if(!($("posName").value.trim())){toast("Customer name likhein",true);return;}
+  if(num($("posDisc").value)>c.sub){toast("Discount bill se zyada nahi ho sakta",true);return;}
+  if(c.afterDisc<=0){toast("Bill amount 0 hai — charges daalein",true);return;}
+  if(c.paid>c.grand){toast("Paid amount bill se zyada hai — zyada se zyada "+fmt(c.grand)+" likhein",true);return;}
+  var bkId=$("posBooking").value||null;
+  var inv={id:uid(),number:"INV-"+String(DB.invoiceSeq).padStart(4,"0"),bookingId:bkId,
+    customerName:$("posName").value.trim(),phone:$("posPhone").value.trim(),date:todayISO(),eventDate:$("posDate").value||todayISO(),
+    guests:num($("posGuests").value),perHead:num($("posPerHead").value),food:c.food,hallRent:num($("posRent").value),stageCharges:num($("posRent").value),timing:$("posTiming").value,
+    kitchenOn:c.kitchenOn,kitchenAmt:c.kitchenAmt,
+    additional:num($("posAdd").value),subtotal:c.sub,discount:num($("posDisc").value),taxOn:c.taxOn,taxMode:"fixed",taxPct:0,taxAmt:c.taxAmt,
+    grandTotal:c.grand,paid:c.paid,due:c.due,format:$("posFormat").value};
+  DB.invoiceSeq++;DB.invoices.push(inv);
+  if(bkId&&c.paid>bkPaid(bkId)){DB.payments.push({id:uid(),bookingId:bkId,amount:c.paid-bkPaid(bkId),method:$("posMethod").value,type:c.due<=0?"Final":"Partial",date:todayISO(),note:"Via invoice "+inv.number});}
+  save();render();showInvoice(inv);toast("Invoice "+inv.number+" saved");
+});
+$("historyBtn").addEventListener("click",function(){var w=$("historyWrap");w.style.display=w.style.display==="none"?"block":"none";renderInvoices();});
+function renderInvoices(){
+  if(!DB.invoices.length){$("invoiceList").innerHTML='<div class="empty"><b>No invoices yet</b>Billing history will appear here.</div>';return;}
+  $("invoiceList").innerHTML=DB.invoices.slice().reverse().map(function(i){
+    return '<div class="list-item"><div class="row1"><div><div class="t">'+i.number+" · "+esc(i.customerName)+'</div><div class="meta">'+esc(fmtD(i.date))+' · Event '+esc(fmtD(i.eventDate))+(i.timing?(" · "+esc(i.timing)):"")+'</div></div>'+
+    '<span class="badge '+(i.due<=0?"b-paid":(i.paid>0?"b-part":"b-unpaid"))+'">'+(i.due<=0?"PAID":(i.paid>0?"PARTIAL":"UNPAID"))+'</span></div>'+
+    '<div class="meta">Total <b style="color:var(--ink)">'+fmt(i.grandTotal)+'</b> · Paid '+fmt(i.paid)+' · Due '+fmt(Math.max(0,i.due))+'</div>'+
+    '<div class="actions"><button class="btn btn-sm" data-inv="'+i.id+'" type="button">View / Reprint</button></div></div>';}).join("");
+  $("invoiceList").querySelectorAll("button[data-inv]").forEach(function(b){b.addEventListener("click",function(){
+    var inv=DB.invoices.filter(function(x){return x.id===b.getAttribute("data-inv");})[0];if(inv)showInvoice(inv);});});
+}
+var currentInv=null;
+function invoiceHTML(inv,thermal){
+  var s=DB.settings;
+  var status=inv.due<=0?"PAID":(inv.paid>0?"PARTIAL":"UNPAID");
+  return '<div class="inv'+(thermal?" thermal":"")+'"><h1>'+esc(s.hallName)+'</h1>'+
+  '<div class="c">'+esc(s.address||"")+(s.contact?("<br>📞 "+esc(s.contact)):"")+'</div><hr>'+
+  '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px"><span><b>'+inv.number+'</b></span><span>Date: '+esc(fmtD(inv.date))+'</span></div>'+
+  '<div style="margin-top:6px">Customer: <b>'+esc(inv.customerName)+'</b>'+(inv.phone?(" · "+esc(inv.phone)):"")+'<br>Event Date: '+esc(fmtD(inv.eventDate))+(inv.timing?(" · Event Timing: "+esc(inv.timing)):"")+'</div><hr>'+
+  '<table><tr><th>Description</th><th class="num">Amount</th></tr>'+
+  '<tr><td>'+t("cateringCharges")+' ('+inv.guests+' guests × '+fmt(inv.perHead)+')</td><td class="num">'+fmt(inv.food)+'</td></tr>'+
+  '<tr><td>Stage Charges</td><td class="num">'+fmt(inv.stageCharges!=null?inv.stageCharges:inv.hallRent)+'</td></tr>'+
+  '<tr><td>Additional Charges</td><td class="num">'+fmt(inv.additional)+'</td></tr>'+
+  (inv.kitchenOn?('<tr><td>Kitchen Charges</td><td class="num">'+fmt(inv.kitchenAmt)+'</td></tr>'):"")+
+  '<tr><td>Subtotal</td><td class="num">'+fmt(inv.subtotal)+'</td></tr>'+
+  '<tr><td>Discount</td><td class="num">− '+fmt(inv.discount)+'</td></tr>'+
+  ((inv.taxOn||num(inv.taxAmt)>0)?('<tr><td>FBR Tax</td><td class="num">'+fmt(num(inv.taxAmt)||FBR_TAX)+'</td></tr>'):"")+
+  '<tr><td class="tot">Grand Total</td><td class="num tot">'+fmt(inv.grandTotal)+'</td></tr>'+
+  '<tr><td>Paid Amount</td><td class="num">'+fmt(inv.paid)+'</td></tr>'+
+  '<tr><td><b>Remaining Balance</b></td><td class="num"><b>'+fmt(Math.max(0,inv.due))+'</b></td></tr></table>'+
+  '<div class="c" style="margin-top:10px">Payment Status: <b>'+status+'</b><br>Thank you for choosing '+esc(s.hallName)+'!</div></div>';
+}
+function showInvoice(inv){currentInv=inv;$("invTitle").textContent="Invoice "+inv.number;$("invPreview").innerHTML=invoiceHTML(inv,inv.format==="80mm");openModal("invModal");}
+function printPage(){if(window.Android&&typeof window.Android.print==="function"){window.Android.print();}else{window.print();}}
+function printInvoice(thermal){if(!currentInv)return;$("printArea").innerHTML=invoiceHTML(currentInv,thermal);setTimeout(function(){printPage();},60);}
+$("invPrintA4").addEventListener("click",function(){printInvoice(false);});
+$("invPrintT").addEventListener("click",function(){printInvoice(true);});
+/* ---------- expenses ---------- */
+var editingExp=null;
+function renderExpenses(){
+  var today=todayISO(),mo=monthISO();
+  var wk=new Date();wk.setDate(wk.getDate()-6);var wkISO=wk.getFullYear()+"-"+String(wk.getMonth()+1).padStart(2,"0")+"-"+String(wk.getDate()).padStart(2,"0");
+  var d=DB.expenses.filter(function(e){return e.date===today;}).reduce(function(s,e){return s+num(e.amount);},0);
+  var w=DB.expenses.filter(function(e){return e.date>=wkISO&&e.date<=today;}).reduce(function(s,e){return s+num(e.amount);},0);
+  var m=DB.expenses.filter(function(e){return (e.date||"").slice(0,7)===mo;}).reduce(function(s,e){return s+num(e.amount);},0);
+  $("expStats").innerHTML=[["Today",fmt(d)],["Last 7 Days",fmt(w)],["This Month",fmt(m)],["All Time",fmt(totalExpenses())]].map(function(c){
+    return '<div class="stat"><div class="k">'+c[0]+'</div><div class="v">'+c[1]+'</div></div>';}).join("");
+  if(!DB.expenses.length){$("expenseList").innerHTML='<div class="empty"><b>No expenses yet</b>Add the first expense to start tracking.</div>';return;}
+  $("expenseList").innerHTML=DB.expenses.slice().sort(function(a,b){return a.date<b.date?1:-1;}).map(function(e){
+    return '<div class="list-item"><div class="row1"><div><div class="t">'+esc(e.category)+'</div><div class="meta">'+esc(fmtD(e.date))+(e.note?(" · "+esc(e.note)):"")+'</div></div><b>'+fmt(e.amount)+'</b></div>'+
+    '<div class="actions"><button class="btn btn-sm" data-eexp="'+e.id+'" type="button">Edit</button><button class="btn btn-sm btn-danger" data-dexp="'+e.id+'" type="button">Delete</button></div></div>';}).join("");
+  $("expenseList").querySelectorAll("button[data-eexp]").forEach(function(b){b.addEventListener("click",function(){
+    var e=DB.expenses.filter(function(x){return x.id===b.getAttribute("data-eexp");})[0];if(!e)return;editingExp=e.id;
+    $("expModalTitle").textContent="Edit Expense";$("expCat").value=e.category;$("expAmt").value=e.amount;$("expDate").value=e.date;$("expNote").value=e.note||"";openModal("expModal");});});
+  $("expenseList").querySelectorAll("button[data-dexp]").forEach(function(b){b.addEventListener("click",function(){
+    if(confirmAction("expdel:"+b.getAttribute("data-dexp"),"Delete this expense?")){DB.expenses=DB.expenses.filter(function(x){return x.id!==b.getAttribute("data-dexp");});save();render();toast("Deleted");}});});
+}
+$("newExpenseBtn").addEventListener("click",function(){editingExp=null;$("expModalTitle").textContent="Add Expense";$("expAmt").value="";$("expDate").value=todayISO();$("expNote").value="";openModal("expModal");});
+$("expForm").addEventListener("submit",function(e){e.preventDefault();
+  if(num($("expAmt").value)<=0){toast("Expense amount must be more than 0",true);return;}
+  var data={category:$("expCat").value,amount:num($("expAmt").value),date:$("expDate").value||todayISO(),note:$("expNote").value.trim()};
+  if(editingExp){Object.assign(DB.expenses.filter(function(x){return x.id===editingExp;})[0],data);toast("Expense updated");}
+  else{data.id=uid();DB.expenses.push(data);toast("Expense saved");}
+  save();closeModal("expModal");render();});
+/* ---------- customers ---------- */
+function renderCustomers(){
+  var map={};
+  DB.bookings.forEach(function(b){var k=(b.phone||b.customerName).trim();if(!k)return;
+    if(!map[k])map[k]={name:b.customerName,phone:b.phone,count:0,billed:0};
+    if(b.status!=="Cancelled"){map[k].count++;map[k].billed+=bkTotal(b);map[k].paid=bkPaidSum(map,k);} });
+  Object.keys(map).forEach(function(k){var c=map[k];c.paid=0;c.due=0;
+    DB.bookings.filter(function(b){return (b.phone||b.customerName).trim()===k&&b.status!=="Cancelled";}).forEach(function(b){c.paid+=bkPaid(b.id);c.due+=Math.max(0,bkDue(b));});});
+  var q=($("custSearch").value||"").toLowerCase();
+  var list=Object.keys(map).map(function(k){return map[k];}).filter(function(c){return c.count>0;}).filter(function(c){return !q||c.name.toLowerCase().indexOf(q)>-1||(c.phone||"").indexOf(q)>-1;})
+    .sort(function(a,b){return b.billed-a.billed;});
+  if(!list.length){$("customerList").innerHTML='<div class="empty"><b>No customers yet</b>Customers appear automatically from bookings.</div>';return;}
+  $("customerList").innerHTML=list.map(function(c){
+    return '<div class="list-item"><div class="t">'+esc(c.name)+'</div><div class="meta">📞 '+esc(c.phone||"—")+' · '+c.count+' booking(s)</div>'+
+    '<div class="meta" style="margin-top:4px">Total Billed <b style="color:var(--ink)">'+fmt(c.billed)+'</b> · Paid '+fmt(c.paid)+' · Outstanding <b style="color:'+(c.due>0?"var(--red)":"var(--green)")+'">'+fmt(c.due)+'</b></div></div>';}).join("");
+}
+function bkPaidSum(){return 0;}
+$("custSearch").addEventListener("input",renderCustomers);
+/* ---------- reports ---------- */
+var lastReport=null;
+function buildReport(){
+  var type=$("repType").value,mo=$("repMonth").value||monthISO(),dt=$("repDate").value||todayISO();
+  var title="",head=[],rows=[],noTotal=false,manualTotal;
+  if(type==="dailySales"){title="Daily Sales Report — "+fmtD(dt);head=["Invoice / Booking","Customer","Amount"];noTotal=true;
+    var billed=0,collected=0;
+    DB.invoices.filter(function(i){return i.date===dt;}).forEach(function(i){rows.push([i.number+" (billed)",i.customerName,i.grandTotal]);billed+=num(i.grandTotal);});
+    if(billed||rows.length)rows.push(["Total Billed","",billed]);
+    DB.payments.filter(function(p){return p.date===dt&&payCounts(p);}).forEach(function(p){var b=DB.bookings.filter(function(x){return x.id===p.bookingId;})[0];rows.push(["Payment ("+p.type+")",b?b.customerName:"—",p.amount]);collected+=num(p.amount);});
+    DB.invoices.filter(function(i){return !i.bookingId&&i.date===dt;}).forEach(function(i){collected+=num(i.paid);});
+    rows.push(["Total Collected (cash)","",collected]);
+    if(rows.length===1&&collected===0)rows=[];}
+  if(type==="monthlyRevenue"){title="Monthly Revenue Report — "+monthLabel(mo);head=["Date","Source","Customer","Amount"];
+    DB.payments.filter(function(p){return (p.date||"").slice(0,7)===mo&&payCounts(p);}).forEach(function(p){var b=DB.bookings.filter(function(x){return x.id===p.bookingId;})[0];rows.push([fmtD(p.date),"Payment · "+p.method,b?b.customerName:"—",p.amount]);});
+    DB.invoices.filter(function(i){return !i.bookingId&&(i.date||"").slice(0,7)===mo;}).forEach(function(i){rows.push([fmtD(i.date),"Walk-in "+i.number,i.customerName,i.paid]);});}
+  if(type==="dailyExpense"){title="Daily Expense Report — "+fmtD(dt);head=["Category","Note","Amount"];
+    DB.expenses.filter(function(e){return e.date===dt;}).forEach(function(e){rows.push([e.category,e.note||"",e.amount]);});}
+  if(type==="monthlyExpense"){title="Monthly Expense Report — "+monthLabel(mo);head=["Date","Category","Note","Amount"];
+    DB.expenses.filter(function(e){return (e.date||"").slice(0,7)===mo;}).forEach(function(e){rows.push([fmtD(e.date),e.category,e.note||"",e.amount]);});}
+  if(type==="pl"){title="Profit & Loss Report — "+monthLabel(mo);head=["Item","Amount"];noTotal=true;
+    var rev=DB.payments.filter(function(p){return (p.date||"").slice(0,7)===mo&&payCounts(p);}).reduce(function(s,p){return s+num(p.amount);},0)+DB.invoices.filter(function(i){return !i.bookingId&&(i.date||"").slice(0,7)===mo;}).reduce(function(s,i){return s+num(i.paid);},0);
+    var exp=DB.expenses.filter(function(e){return (e.date||"").slice(0,7)===mo;}).reduce(function(s,e){return s+num(e.amount);},0);
+    rows=[["Total Revenue",rev],["Total Expenses",exp],["Net Profit",rev-exp]];}
+  if(type==="pending"){title="Pending Payment Report";head=["Customer","Phone","Event Date","Total","Paid","Due"];
+    activeBookings().forEach(function(b){var d=bkDue(b);if(d>0)rows.push([b.customerName,b.phone,fmtD(b.date),bkTotal(b),bkPaid(b.id),d]);});}
+  if(type==="history"){title="Booking History";head=["Date","Customer","Event","Timing","Hall","Status","Total"];
+    DB.bookings.slice().sort(function(a,b){return a.date<b.date?1:-1;}).forEach(function(b){rows.push([fmtD(b.date),b.customerName,b.eventType,timingOf(b),b.hall,b.status,bkTotal(b)]);});
+    manualTotal=rows.filter(function(r){return r[5]!=="Cancelled";}).reduce(function(s,r){return s+num(r[6]);},0);}
+  var total=null;
+  if(rows.length){var li=head.length-1;if(typeof rows[0][li]==="number"){total=rows.reduce(function(s,r){return s+num(r[li]);},0);}}
+  if(noTotal)total=null;
+  if(manualTotal!==undefined)total=manualTotal;
+  return {title:title,head:head,rows:rows,total:total};
+}
+function renderReport(){
+  var r=buildReport();lastReport=r;
+  var html="<h3>"+esc(r.title)+"</h3>";
+  if(!r.rows.length)html+='<p class="meta">No data for this report yet.</p>';
+  else{html+='<div class="table-wrap"><table><tr>'+r.head.map(function(h,i){return '<th class="'+(i===r.head.length-1?"num":"")+'">'+esc(h)+"</th>";}).join("")+"</tr>"+
+    r.rows.map(function(row){return "<tr>"+row.map(function(c,i){return '<td class="'+(i===row.length-1&&typeof c==="number"?"num":"")+'">'+(typeof c==="number"?fmt(c):esc(c))+"</td>";}).join("")+"</tr>";}).join("")+
+    (r.total!==null?'<tr><td colspan="'+(r.head.length-1)+'"><b>Total</b></td><td class="num"><b>'+fmt(r.total)+"</b></td></tr>":"")+"</table></div>";}
+  $("repBody").innerHTML=html;$("repOut").style.display="block";
+}
+$("repRun").addEventListener("click",renderReport);
+$("repCsv").addEventListener("click",function(){
+  var r=lastReport||buildReport();
+  var csv=[r.head.join(",")].concat(r.rows.map(function(row){return row.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(",");})).join("\n");
+  toast(download("report.csv",csv,"text/csv")?"Download started":"CSV downloaded");});
+$("repPrint").addEventListener("click",function(){
+  if(!lastReport)renderReport();
+  $("printArea").innerHTML='<div class="inv"><h1>'+esc(DB.settings.hallName)+'</h1><div class="c">'+esc(lastReport.title)+'</div><hr>'+$("repBody").innerHTML.replace(/class="table-wrap"/g,"")+"</div>";
+  setTimeout(function(){printPage();},60);});
+/* Returns true when the file was handed to the Android app bridge (APK),
+   false when the normal browser Blob-anchor download ran. */
+function download(name,content,mime){
+  var blob=new Blob([content],{type:mime});
+  if(window.Android&&typeof window.Android.download==="function"){
+    var rd=new FileReader();
+    rd.onload=function(){var res=String(rd.result||"");var b64=res.indexOf(",")>=0?res.slice(res.indexOf(",")+1):res;
+      try{window.Android.download(name,b64,mime);}catch(e){}};
+    rd.onerror=function(){};
+    rd.readAsDataURL(blob);
+    return true;
+  }
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},400);
+  return false;}
+/* ---------- settings ---------- */
+function renderSettings(){
+  var s=DB.settings;
+  $("setName").value=s.hallName;$("setContact").value=s.contact||"";$("setAddress").value=s.address||"";
+  $("setCurrency").value=s.currency||"PKR";$("setPerHead").value=(s.defaultPerHead? s.defaultPerHead : "");
+  $("setFormat").value=s.invoiceFormat||"A4";
+  $("hdrHall").textContent=s.hallName;$("lockHall").textContent=s.hallName;
+  renderHallList();
+}
+$("setSave").addEventListener("click",function(){
+  var s=DB.settings;
+  s.hallName=$("setName").value.trim()||"Eden Royal Marquee";s.contact=$("setContact").value.trim();s.address=$("setAddress").value.trim();
+  s.currency=$("setCurrency").value.trim()||"PKR";s.defaultPerHead=num($("setPerHead").value);s.defaultTax=0;
+  s.invoiceFormat=$("setFormat").value;
+  save();render();toast("Settings saved");});
+/* ---------- halls manager (Settings) ---------- */
+var editingHallId=null;
+function renderHallList(){
+  var list=$("hallList");if(!list)return;
+  var halls=getHalls();
+  list.innerHTML=halls.map(function(h){
+    var lb=hallLabel(h), isDef=h.id==="hall-main";
+    return '<div class="list-item" style="margin-bottom:8px"><div class="hall-row">'+
+    '<span class="hall-num">'+esc(h.number?String(h.number):"—")+'</span>'+
+    '<div class="grow"><div class="t" style="font-weight:700">'+esc(lb)+'</div>'+
+    '<div class="meta">'+esc(h.name)+(isDef?' · <span style="color:var(--gold2);font-weight:700">'+esc(t("defaultHall"))+"</span>":"")+'</div></div>'+
+    '<div style="display:flex;gap:6px;flex-shrink:0"><button class="btn btn-sm" data-hact="edit" data-hid="'+esc(h.id)+'" type="button">'+esc(t("editItem"))+'</button>'+
+    (isDef?"":'<button class="btn btn-sm btn-danger" data-hact="del" data-hid="'+esc(h.id)+'" type="button">'+esc(t("deleteItem"))+'</button>')+
+    '</div></div></div>';}).join("");
+  list.querySelectorAll("button[data-hact]").forEach(function(b){b.addEventListener("click",function(){hallAction(b.getAttribute("data-hact"),b.getAttribute("data-hid"));});});
+  var addLbl=document.querySelector("#addHallBtn [data-i18n]");
+  if(addLbl)addLbl.textContent=t(editingHallId?"updateHall":"addHall");
+  $("cancelHallEditBtn").style.display=editingHallId?"inline-flex":"none";
+}
+function hallFormReset(){editingHallId=null;$("newHallNumber").value="";$("newHallName").value="";$("hallErr").textContent="";}
+function hallAction(act,id){
+  var h=getHalls().filter(function(x){return x.id===id;})[0];if(!h)return;
+  if(act==="edit"){editingHallId=id;$("newHallNumber").value=h.number||"";$("newHallName").value=h.name;$("hallErr").textContent="";renderHallList();$("newHallName").focus();}
+  if(act==="del"){
+    if(h.id==="hall-main"){toast("Default Main Hall cannot be deleted",true);return;}
+    if(confirmAction("halldel:"+id,"Delete "+hallLabel(h)+"?")){
+      DB.settings.halls=getHalls().filter(function(x){return x.id!==id;});
+      if(editingHallId===id)hallFormReset();
+      save();render();toast("Hall deleted");}}
+}
+$("addHallBtn").addEventListener("click",function(){
+  var name=$("newHallName").value.trim(), number=$("newHallNumber").value.trim();
+  if(!name){$("hallErr").textContent="⚠ "+t("eachHallName")+" — required.";return;}
+  var others=getHalls().filter(function(h){return h.id!==editingHallId;});
+  var dupNum=number!==""&&others.some(function(h){return String(h.number||"").trim()===number;});
+  var dupName=others.some(function(h){return h.name.trim().toLowerCase()===name.toLowerCase();});
+  if(dupNum){$("hallErr").textContent="⚠ Hall Number "+number+" is already used by another hall — choose a different number.";return;}
+  if(dupName){$("hallErr").textContent="⚠ A hall named \u201C"+name+"\u201D already exists — choose a different name.";return;}
+  if(editingHallId){
+    var h=getHalls().filter(function(x){return x.id===editingHallId;})[0];if(!h)return;
+    var oldLabel=hallLabel(h);h.name=name;h.number=number;var nl=hallLabel(h);
+    if(nl!==oldLabel)DB.bookings.forEach(function(b){if(b.hall===oldLabel)b.hall=nl;});
+    toast("Hall updated");
+  }else{
+    getHalls().push({id:"hall-"+uid(),name:name,number:number});
+    toast("Hall added");
+  }
+  hallFormReset();save();render();
+});
+$("cancelHallEditBtn").addEventListener("click",function(){hallFormReset();renderHallList();});
+$("pinSave").addEventListener("click",function(){
+  var p=$("setPin").value.trim();
+  if(p&&!/^\d{4}$/.test(p)){toast("PIN must be exactly 4 digits",true);return;}
+  DB.settings.pin=p;save();$("setPin").value="";applyLang();toast(p?"PIN lock set":"PIN lock removed");});
+$("backupBtn").addEventListener("click",function(){toast(download("eden-royal-backup-"+todayISO()+".json",JSON.stringify(DB,null,2),"application/json")?"Download started":"Backup downloaded");});
+$("restoreFile").addEventListener("change",function(){
+  var f=this.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{var d=JSON.parse(r.result);if(!d.settings||!Array.isArray(d.bookings))throw new Error("bad");
+    DB=d;normalizeHalls();hallFormReset();save();applyLang();render();toast("Backup restored");}catch(e){toast("Invalid backup file",true);}};
+  r.readAsText(f);this.value="";});
+/* ---------- theme ---------- */
+var THEME_KEY="eden_erp_theme";
+var curTheme="dark";
+try{curTheme=localStorage.getItem(THEME_KEY)==="light"?"light":"dark";}catch(e){}
+function applyTheme(th,persist){
+  curTheme=th==="light"?"light":"dark";
+  document.documentElement.setAttribute("data-theme",curTheme);
+  var m=document.querySelector('meta[name="color-scheme"]');
+  if(m)m.setAttribute("content",curTheme);
+  document.querySelectorAll("#themeSeg button").forEach(function(b){b.classList.toggle("on",b.getAttribute("data-theme-opt")===curTheme);});
+  if(persist){try{localStorage.setItem(THEME_KEY,curTheme);}catch(e){}}
+}
+$("themeBtn").addEventListener("click",function(){applyTheme(curTheme==="dark"?"light":"dark",true);});
+document.querySelectorAll("#themeSeg button").forEach(function(b){b.addEventListener("click",function(){applyTheme(b.getAttribute("data-theme-opt"),true);});});
+/* ---------- language & lock ---------- */
+function toggleLang(){DB.lang=DB.lang==="ur"?"en":"ur";save();applyLang();render();}
+$("langBtn").addEventListener("click",toggleLang);
+$("langBtn2").addEventListener("click",toggleLang);
+var pinEntry="";
+function renderPinDots(){$("pinDots").textContent="●".repeat(pinEntry.length);}
+function buildPinPad(){
+  var keys=["1","2","3","4","5","6","7","8","9","","0","⌫"];
+  $("pinPad").innerHTML=keys.map(function(k){return k?'<button type="button" data-pin="'+k+'">'+k+"</button>":"<span></span>";}).join("");
+  $("pinPad").querySelectorAll("button[data-pin]").forEach(function(b){b.addEventListener("click",function(){
+    var k=b.getAttribute("data-pin");
+    if(k==="⌫"){pinEntry=pinEntry.slice(0,-1);}
+    else if(pinEntry.length<4){pinEntry+=k;}
+    renderPinDots();
+    if(pinEntry.length===4){
+      if(pinEntry===DB.settings.pin){$("lockScreen").classList.remove("open");pinEntry="";renderPinDots();$("pinErr").textContent="";}
+      else{$("pinErr").textContent="Wrong PIN — try again";pinEntry="";renderPinDots();}}
+  });});
+}
+$("lockBtn").addEventListener("click",function(){if(DB.settings.pin){pinEntry="";renderPinDots();$("lockScreen").classList.add("open");}});
+/* ---------- render all / init ---------- */
+function render(){
+  $("hdrDate").textContent=fmtD(todayISO());
+  renderSettings();
+  if(currentView==="dashboard")renderDashboard();
+  if(currentView==="bookings")renderBookings();
+  if(currentView==="pos"){fillPosBookings();if(!$("posDate").value)$("posDate").value=todayISO();
+    if($("posPerHead").value===""&&num(posPerHeadDefault)===0)$("posPerHead").value=blankNum(DB.settings.defaultPerHead||"");
+    else if(num($("posPerHead").value)===num(posPerHeadDefault))$("posPerHead").value=blankNum(DB.settings.defaultPerHead||"");
+    posPerHeadDefault=DB.settings.defaultPerHead||0;
+    $("posFormat").value=DB.settings.invoiceFormat||"A4";updatePosCalc();renderInvoices();}
+  if(currentView==="expenses")renderExpenses();
+  if(currentView==="customers")renderCustomers();
+}
+$("repMonth").value=monthISO();$("repDate").value=todayISO();
+$("posDate").value=todayISO();$("posPerHead").value=(DB.settings.defaultPerHead?DB.settings.defaultPerHead:"");
+var posPerHeadDefault=DB.settings.defaultPerHead||0;
+migrateData();applyTheme(curTheme,false);applyLang();buildPinPad();render();
+if(DB.settings.pin){$("lockScreen").classList.add("open");}
+updatePosCalc();
+</script>
+</body>
+</html>
